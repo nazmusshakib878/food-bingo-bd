@@ -24,7 +24,7 @@
 
 /* Food Card Interaction */
 .food-card {
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
   will-change: transform;
 }
 
@@ -33,11 +33,12 @@
 }
 
 .food-card-selected {
-  @apply bg-white border-brand-green/40 shadow-[0_4px_20px_-4px_rgba(11,61,44,0.25)] -translate-y-1;
+  @apply bg-[#f2f9f5] border-brand-green shadow-[0_4px_16px_-4px_rgba(212,175,55,0.3)] -translate-y-[2px];
+  /* Subtle gold/green glow using rgba */
 }
 
 .food-card-unselected {
-  @apply bg-white border-gray-200 shadow-sm hover:border-gray-300 hover:shadow-md hover:-translate-y-1 cursor-pointer;
+  @apply bg-white border-gray-200 shadow-sm hover:border-brand-green/60 hover:shadow-md hover:-translate-y-[2px] cursor-pointer;
 }
 
 /* Confetti overlay */

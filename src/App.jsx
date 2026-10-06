@@ -164,12 +164,15 @@ function App() {
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="text-4xl md:text-5xl font-black text-brand-red tracking-tight">{score} <span className="text-xl md:text-2xl font-bold text-gray-300">/ 100</span></div>
+                <div className="text-4xl md:text-5xl font-black tracking-tight">
+                  <span className="text-brand-green">{score}</span>
+                  <span className="text-xl md:text-2xl font-bold text-brand-red ml-1">/ 100</span>
+                </div>
               </div>
             </div>
             <div className="w-full h-2.5 bg-gray-100 rounded-full mt-4 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-brand-gold to-brand-red transition-all duration-500 ease-out rounded-full relative overflow-hidden" 
+                className="h-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-red transition-all duration-500 ease-out rounded-full relative overflow-hidden" 
                 style={{ width: `${progressPercent}%` }}
               >
                 <div className="absolute inset-0 bg-white/20 w-full h-full animate-shimmer"></div>
@@ -227,7 +230,8 @@ function App() {
         </div>
 
         {/* 6. FOOD CARD GRID */}
-        <div className="max-w-6xl mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-3 md:gap-4">
+        {/* 6. FOOD CARD GRID */}
+        <div className="max-w-6xl mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-3 md:gap-4">
           {filteredFoods.map(food => {
             const isSelected = selectedFoods.includes(food.id);
             return (
@@ -236,23 +240,20 @@ function App() {
                 onClick={() => handleToggle(food.id)}
                 aria-pressed={isSelected}
                 aria-label={food.nameBn}
-                className={`food-card relative rounded-2xl p-2 md:p-3 border flex flex-col items-center justify-center text-center aspect-square overflow-hidden group focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2
+                className={`food-card relative rounded-2xl p-3 border flex flex-col items-center justify-between text-center aspect-[4/5] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2
                   ${isSelected ? 'food-card-selected' : 'food-card-unselected'}`}
               >
-                <div className={`text-5xl md:text-6xl mb-2 transition-all duration-300 ${isSelected ? 'scale-110 drop-shadow-md' : 'grayscale opacity-50 blur-[0.5px]'}`}>
+                <div className={`text-4xl md:text-5xl transition-all duration-300 mt-2 ${isSelected ? 'scale-110 drop-shadow-md' : 'grayscale opacity-[0.55] group-hover:opacity-75'}`}>
                   {food.emoji}
                 </div>
                 
-                <div className="absolute inset-0 flex items-end justify-center pb-2 pointer-events-none">
-                  {isSelected ? (
-                    <span className="text-[11px] md:text-sm font-bold leading-tight text-center px-1.5 py-0.5 w-[90%] line-clamp-2 text-brand-green bg-white/95 rounded backdrop-blur-sm shadow-sm border border-brand-green/10">
-                      {food.nameBn}
-                    </span>
-                  ) : (
-                    <span className="text-sm md:text-base font-black text-gray-400 opacity-80 bg-white/60 px-2 rounded backdrop-blur-sm">
-                      ???
-                    </span>
-                  )}
+                <div className="mt-auto w-full flex flex-col items-center pb-1">
+                  <span className={`text-[13px] md:text-[15px] font-semibold leading-[1.2] text-center w-[95%] line-clamp-2 ${isSelected ? 'text-brand-green font-bold' : 'text-gray-600'}`}>
+                    {food.nameBn}
+                  </span>
+                  <span className="text-[10px] text-gray-400 font-sans hidden md:block mt-0.5 truncate w-full px-1">
+                    {food.nameEn}
+                  </span>
                 </div>
 
                 {isSelected && (
