@@ -106,7 +106,7 @@ export default function PosterGenerator({ selectedFoods, getBadge }) {
   };
 
   const handleShare = async () => {
-    const shareText = `আমি Food Bingo BD-তে ${score}/100 করেছি 🔥\nতুমি কি আমার স্কোর হারাতে পারবে?\n\nhttps://foodbingobd.com`;
+    const shareText = `আমি Food Bingo BD-এর ${foodsData.length}টি বিখ্যাত খাবারের মধ্যে ${score}টি খেয়েছি! 🔥\nতুমি কি আমার স্কোর হারাতে পারবে?\n\nhttps://foodbingobd.com`;
     
     let file = null;
     if (posterRef.current && navigator.canShare) {
@@ -259,7 +259,7 @@ export default function PosterGenerator({ selectedFoods, getBadge }) {
                     {name ? `${name} এর Food Bingo` : 'আমার Food Bingo'}
                   </h1>
                   <p className={`text-4xl ${activeTheme.text} opacity-90`}>
-                    বাংলাদেশের ১০০টি জনপ্রিয় খাবারের তালিকা
+                    বাংলাদেশের {foodsData.length}টি জনপ্রিয় খাবারের তালিকা
                   </p>
                 </div>
               </div>
@@ -298,7 +298,7 @@ export default function PosterGenerator({ selectedFoods, getBadge }) {
                     লেভেল: <span className={activeTheme.accent}>{badge}</span>
                   </p>
                   <p className={`text-3xl ${activeTheme.text} opacity-90`}>
-                    স্কোর: <span className="font-bold text-4xl">{score}/100</span>
+                    স্কোর: <span className="font-bold text-4xl">{score}/{foodsData.length}</span>
                   </p>
                 </div>
                 <div className="text-right">

@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('foodBingoSelected', JSON.stringify(selectedFoods));
-    if (selectedFoods.length === 100) {
+    if (selectedFoods.length === foodsData.length && foodsData.length > 0) {
       triggerConfetti();
     }
   }, [selectedFoods]);
@@ -77,17 +77,20 @@ function App() {
   };
 
   const getBadge = (score) => {
-    if (score <= 30) return 'নতুন শিকারী 🌱';
-    if (score <= 60) return 'খাবার প্রেমিক 😋';
-    if (score <= 85) return 'ভোজন রসিক 🤤';
-    return 'ভোজন বিলাসী বস 👑';
+    const percentage = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
+    if (percentage <= 30) return 'নতুন শিকারী 🌱';
+    if (percentage <= 60) return 'খাবার প্রেমিক 😋';
+    if (percentage <= 85) return 'ভোজন রসিক 🤤';
+    if (percentage <= 99) return 'ভোজন বিলাসী বস 👑';
+    return 'Food Bingo Champion 🏆';
   };
 
   const getScoreMessage = (score) => {
-    if (score <= 30) return 'বাংলাদেশের খাবারের জগৎ এখনো অনেক বাকি! 🍽️';
-    if (score <= 60) return 'ভালোই খাওয়া হয়েছে! কিন্তু আরও অনেক স্বাদ অপেক্ষা করছে 😋';
-    if (score <= 85) return 'আপনি সত্যিকারের ভোজন রসিক! 🔥';
-    if (score <= 99) return 'আপনাকে থামানো কঠিন! 👑';
+    const percentage = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
+    if (percentage <= 30) return 'বাংলাদেশের খাবারের জগৎ এখনো অনেক বাকি! 🍽️';
+    if (percentage <= 60) return 'ভালোই খাওয়া হয়েছে! কিন্তু আরও অনেক স্বাদ অপেক্ষা করছে 😋';
+    if (percentage <= 85) return 'আপনি সত্যিকারের ভোজন রসিক! 🔥';
+    if (percentage <= 99) return 'আপনাকে থামানো কঠিন! 👑';
     return 'অবিশ্বাস্য! আপনি Food Bingo BD সম্পূর্ণ করেছেন! 🏆🇧🇩';
   };
 
@@ -108,7 +111,7 @@ function App() {
   });
 
   const score = selectedFoods.length;
-  const progressPercent = (score / 100) * 100;
+  const progressPercent = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-transparent font-bangla text-brand-dark pb-20">
@@ -116,7 +119,7 @@ function App() {
       {/* 1. HERO SECTION */}
       <section className="relative pt-10 pb-8 px-6 max-w-5xl mx-auto flex flex-col items-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-green/10 text-brand-green text-sm font-bold mb-6">
-          <span>🇧🇩</span> 100 Popular Bangladeshi Foods
+          <span>🇧🇩</span> {foodsData.length}টি বিখ্যাত বাংলাদেশি খাবার
         </div>
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-brand-green mb-4 leading-[1.1]">
           বাংলাদেশের কয়টা<br />খাবার খেয়েছেন?
@@ -166,7 +169,7 @@ function App() {
               <div className="text-right flex-shrink-0">
                 <div className="text-4xl md:text-5xl font-black tracking-tight">
                   <span className="text-brand-green">{score}</span>
-                  <span className="text-xl md:text-2xl font-bold text-brand-red ml-1">/ 100</span>
+                  <span className="text-xl md:text-2xl font-bold text-brand-red ml-1">/ {foodsData.length}</span>
                 </div>
               </div>
             </div>
@@ -290,12 +293,12 @@ function App() {
         <div className="bg-white rounded-3xl p-8 md:p-12 shadow-soft border border-gray-100 text-center relative overflow-hidden">
           <h3 className="text-xl text-gray-500 font-semibold mb-2">আপনার Food Bingo Score</h3>
           <div className="text-6xl md:text-7xl font-bold text-brand-green mb-4">
-            {score} <span className="text-3xl text-gray-400">/ 100</span>
+            {score} <span className="text-3xl text-gray-400">/ {foodsData.length}</span>
           </div>
           <div className="text-2xl font-bold text-brand-red mb-4">{getBadge(score)}</div>
           <p className="text-lg text-gray-600">{getScoreMessage(score)}</p>
           
-          {score === 100 && (
+          {score === foodsData.length && foodsData.length > 0 && (
             <div className="absolute inset-0 bg-brand-gold/10 flex items-center justify-center pointer-events-none">
               <span className="text-9xl opacity-20">🏆</span>
             </div>
