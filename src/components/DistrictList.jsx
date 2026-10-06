@@ -131,18 +131,18 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                             <span className="block text-[13px] leading-tight text-gray-500 line-clamp-2 mt-0.5">
                               {lang === 'bn' ? d.foodBn : d.foodEn}
                             </span>
+                          </span>                          <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#f2ecdd] text-lg" aria-hidden="true">
+                            <span>🍲</span>
+                            {d.image && (
+                              <img
+                                src={d.image}
+                                alt=""
+                                loading="lazy"
+                                onError={(e) => e.currentTarget.remove()}
+                                className={`absolute inset-0 h-full w-full object-cover transition ${on ? '' : 'grayscale opacity-60'}`}
+                              />
+                            )}
                           </span>
-                          {d.image && (
-                            <img
-                              src={d.image}
-                              alt=""
-                              loading="lazy"
-                              onError={(e) => { e.target.style.display = 'none'; }}
-                              className={`w-10 h-10 rounded-lg object-cover shrink-0 transition ${
-                                on ? '' : 'grayscale opacity-60'
-                              }`}
-                            />
-                          )}
                         </button>
                       </li>
                     );

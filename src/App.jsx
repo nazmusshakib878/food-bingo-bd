@@ -62,16 +62,20 @@ function App() {
   const { count: visitorCount, loading: visitorLoading, unavailable: visitorUnavailable } = useVisitorCount();
 
   useEffect(() => {
-    if (!previewContainerRef.current) return;
+    const container = previewContainerRef.current;
+    if (!container) return undefined;
+
+    const updateScale = (width) => {
+      if (width > 0) setPreviewScale(Math.min(1, width / POSTER_W));
+    };
+    updateScale(container.getBoundingClientRect().width);
+
     const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        const width = entry.contentRect.width;
-        setPreviewScale(width / POSTER_W);
-      }
+      entries.forEach((entry) => updateScale(entry.contentRect.width));
     });
-    observer.observe(previewContainerRef.current);
+    observer.observe(container);
     return () => observer.disconnect();
-  }, []);
+  }, [selected.size]);
 
   useEffect(() => {
     localStorage.setItem('foodbingobd_districts', JSON.stringify([...selected]));
@@ -216,17 +220,17 @@ function App() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-brand-cream font-bangla text-brand-dark pb-24 lg:pb-0">
       {/* Navbar */}
-      <nav className="bg-white border-b border-[#f0e8d2] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <div className="font-bold text-2xl tracking-tight text-brand-green">Food Bingo BD</div>
-          <div className="flex items-center gap-3">
+      <nav className="app-nav sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 h-16 flex items-center justify-between gap-2">
+          <div className="app-brand min-w-0 truncate font-bold text-xl sm:text-2xl tracking-tight text-brand-green">Food Bingo BD</div>
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             <button 
               onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
-              className="text-sm font-bold border-2 border-brand-green text-brand-green rounded-full px-3 py-1 hover:bg-brand-green hover:text-white transition-colors"
+              className="text-xs sm:text-sm font-bold border-2 border-brand-green text-brand-green rounded-full px-2.5 sm:px-3 py-1 hover:bg-brand-green hover:text-white transition-colors"
             >
               {lang === 'bn' ? 'English' : 'বাংলা'}
             </button>
-            <div className="font-bold bg-brand-green/10 text-brand-green px-4 py-1.5 rounded-full">
+            <div className="text-sm sm:text-base font-bold bg-brand-green/10 text-brand-green px-2.5 sm:px-4 py-1.5 rounded-full">
               {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)}
             </div>
           </div>
@@ -284,7 +288,7 @@ function App() {
               const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
               target?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             }}
-            className="mt-8 max-w-full whitespace-normal px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="hero-cta mt-8 max-w-full whitespace-normal px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
             {selected.size > 0 
               ? (lang === 'bn' ? 'মানচিত্রে ফিরে যান' : 'Return to Map')
@@ -357,7 +361,7 @@ function App() {
           </div>
 
           {/* Right: Bangladesh Map */}
-          <div className="flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
+          <div className="map-surface flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
             <div className="w-full h-auto aspect-[7/9] shrink flex items-center justify-center lg:h-full lg:max-h-full lg:w-auto lg:max-w-full">
               <BDMap
                 lang={lang}
@@ -538,7 +542,7 @@ function App() {
             onClick={() => {
               document.getElementById('poster-section')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="bg-brand-red text-white px-6 py-2.5 rounded-full font-bold shadow-sm"
+            className="bg-brand-red text-white px-4 sm:px-6 py-2.5 rounded-full font-bold text-sm sm:text-base shadow-sm whitespace-nowrap"
           >
             {lang === 'bn' ? 'পোস্টার বানান' : 'Make Poster'}
           </button>
