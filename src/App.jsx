@@ -5,7 +5,7 @@ import Poster, { POSTER_W, POSTER_H } from './components/Poster';
 import { TOTAL } from './data/districts';
 import { Download, Share2, Image as ImageIcon, Link2 } from 'lucide-react';
 
-const enToBn = (num) => String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+const localizeNum = (num, lang) => lang === 'bn' ? String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : num;
 
 const encodeChallenge = (name, score) => {
   try {
@@ -29,6 +29,7 @@ const decodeChallenge = (c) => {
 };
 
 function App() {
+  const [lang, setLang] = useState('bn');
   const [selected, setSelected] = useState(() => {
     try {
       const saved = localStorage.getItem('foodbingobd_districts');
@@ -198,8 +199,16 @@ function App() {
       <nav className="bg-white border-b border-[#f0e8d2] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <div className="font-bold text-2xl tracking-tight text-brand-green">Food Bingo BD</div>
-          <div className="font-bold bg-brand-green/10 text-brand-green px-4 py-1.5 rounded-full">
-            {selected.size} / {TOTAL}
+          <div className="flex items-center gap-3">
+            <button 
+              onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
+              className="text-sm font-bold border-2 border-brand-green text-brand-green rounded-full px-3 py-1 hover:bg-brand-green hover:text-white transition-colors"
+            >
+              {lang === 'bn' ? 'EN' : 'বাংলা'}
+            </button>
+            <div className="font-bold bg-brand-green/10 text-brand-green px-4 py-1.5 rounded-full">
+              {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)}
+            </div>
           </div>
         </div>
       </nav>
@@ -207,10 +216,16 @@ function App() {
       {/* Hero Section */}
       <header className="py-8 md:py-12 px-4 text-center max-w-4xl mx-auto">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-green mb-4 leading-tight [text-wrap:balance]">
-          আপনার খাওয়া <span className="text-brand-red">জেলার খাবার</span> চিহ্নিত করুন
+          {lang === 'bn' ? (
+            <>আপনার খাওয়া <span className="text-brand-red">জেলার খাবার</span> চিহ্নিত করুন</>
+          ) : (
+            <>Mark the <span className="text-brand-red">District Foods</span> You Have Eaten</>
+          )}
         </h1>
         <p className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed [text-wrap:balance]">
-          বাংলাদেশের ৬৪ জেলার বিখ্যাত সব খাবার। আপনি কোন কোন জেলার সিগনেচার খাবারগুলো খেয়েছেন? ম্যাপে ক্লিক করে আপনার স্কোর তৈরি করুন!
+          {lang === 'bn' 
+            ? 'বাংলাদেশের ৬৪ জেলার বিখ্যাত সব খাবার। আপনি কোন কোন জেলার সিগনেচার খাবারগুলো খেয়েছেন? ম্যাপে ক্লিক করে আপনার স্কোর তৈরি করুন!'
+            : 'Famous signature foods from all 64 districts of Bangladesh. Which ones have you tried? Click the map to build your score!'}
         </p>
         <button 
           onClick={() => {
@@ -219,7 +234,7 @@ function App() {
           }}
           className="px-8 py-3 bg-brand-green text-white text-lg font-bold rounded-full shadow-md hover:bg-green-900 transition"
         >
-          শুরু করুন
+          {lang === 'bn' ? 'শুরু করুন' : 'Get Started'}
         </button>
       </header>
 
@@ -227,7 +242,9 @@ function App() {
         <div className="max-w-4xl mx-auto px-4 mb-8">
           <div className="bg-[#f2f9f5] border-2 border-brand-green rounded-3xl p-8 text-center shadow-sm">
             <h2 className="text-2xl md:text-3xl font-bold text-brand-green mb-4 leading-tight">
-              {challengeData.name} খেয়েছে {enToBn(challengeData.score)}/১০০ — তুমি কয়টা খেয়েছ?
+              {lang === 'bn' 
+                ? `${challengeData.name} খেয়েছে ${localizeNum(challengeData.score, lang)}/${localizeNum(TOTAL, lang)} — তুমি কয়টা খেয়েছ?`
+                : `${challengeData.name} has eaten ${challengeData.score}/${TOTAL} — how many have you?`}
             </h2>
             <button 
               onClick={() => {
@@ -249,6 +266,7 @@ function App() {
           {/* Left: District List */}
           <div className="w-full lg:w-[400px] xl:w-[450px] shrink-0">
             <DistrictList
+              lang={lang}
               selected={selected}
               activeId={activeId}
               onToggle={handleToggle}
@@ -262,6 +280,7 @@ function App() {
           <div className="flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
             <div className="w-full max-w-[700px] aspect-[4/5] relative flex items-center justify-center">
               <BDMap
+                lang={lang}
                 selected={selected}
                 activeId={activeId}
                 interactive={true}
@@ -275,8 +294,8 @@ function App() {
               <div className="inline-flex items-center gap-2 bg-brand-green/10 px-5 py-2.5 rounded-full text-brand-green font-bold text-lg">
                 <span className="text-2xl">{selected.size}</span>
                 <span className="opacity-50">/</span>
-                <span>{TOTAL}</span>
-                <span className="ml-1 opacity-75 font-normal">সম্পন্ন</span>
+                <span>{localizeNum(TOTAL, lang)}</span>
+                <span className="ml-1 opacity-75 font-normal">{lang === 'bn' ? 'সম্পন্ন' : 'completed'}</span>
               </div>
             </div>
           </div>
@@ -291,17 +310,23 @@ function App() {
             {challengeData && (
               <div className="mb-12 p-6 rounded-3xl bg-[#fdfaf2] border-2 border-brand-green text-center shadow-sm max-w-2xl mx-auto">
                 <h3 className="text-2xl md:text-3xl font-bold text-brand-dark mb-4">
-                  তুমি <span className="text-brand-green">{enToBn(selected.size)}</span> vs {challengeData.name} <span className="text-brand-red">{enToBn(challengeData.score)}</span>
+                  {lang === 'bn' 
+                    ? <>তুমি <span className="text-brand-green">{localizeNum(selected.size, lang)}</span> vs {challengeData.name} <span className="text-brand-red">{localizeNum(challengeData.score, lang)}</span></>
+                    : <>You <span className="text-brand-green">{selected.size}</span> vs {challengeData.name} <span className="text-brand-red">{challengeData.score}</span></>}
                 </h3>
                 <p className="text-xl font-medium text-gray-700 bg-white inline-block px-6 py-2 rounded-full border border-[#eadfc4]">
-                  {selected.size > challengeData.score ? 'দারুণ! তুমি জিতে গেছো! 🏆' : selected.size < challengeData.score ? 'ইশ! আরেকটু খেলে জিতে যেতে! 🥲' : 'আরেহ! সমান সমান! 🤝'}
+                  {selected.size > challengeData.score 
+                    ? (lang === 'bn' ? 'দারুণ! তুমি জিতে গেছো! 🏆' : 'Awesome! You won! 🏆') 
+                    : selected.size < challengeData.score 
+                      ? (lang === 'bn' ? 'ইশ! আরেকটু খেলে জিতে যেতে! 🥲' : 'Oops! Just a little more to win! 🥲') 
+                      : (lang === 'bn' ? 'আরেহ! সমান সমান! 🤝' : 'Wow! It\'s a tie! 🤝')}
                 </p>
               </div>
             )}
 
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-brand-green mb-4">আপনার ম্যাপ শেয়ার করুন</h2>
-              <p className="text-lg text-gray-600">আপনার নাম ও ছবি দিয়ে পোস্টার তৈরি করে বন্ধুদের চ্যালেঞ্জ করুন!</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-brand-green mb-4">{lang === 'bn' ? 'আপনার ম্যাপ শেয়ার করুন' : 'Share Your Map'}</h2>
+              <p className="text-lg text-gray-600">{lang === 'bn' ? 'আপনার নাম ও ছবি দিয়ে পোস্টার তৈরি করে বন্ধুদের চ্যালেঞ্জ করুন!' : 'Create a poster with your name and photo to challenge friends!'}</p>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
@@ -309,30 +334,30 @@ function App() {
               {/* Settings Panel */}
               <div className="w-full lg:w-1/3 bg-[#fdfaf2] p-8 rounded-3xl shadow-sm border border-[#eadfc4]">
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">আপনার নাম</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{lang === 'bn' ? 'আপনার নাম' : 'Your Name'}</label>
                   <input 
                     type="text" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="যেমন: সাকিব"
+                    placeholder={lang === 'bn' ? 'যেমন: সাকিব' : 'e.g. Shakib'}
                     className="w-full px-4 py-3 border border-[#eadfc4] rounded-xl focus:ring-2 focus:ring-brand-green outline-none bg-white transition-colors text-lg"
                     maxLength={20}
                   />
                 </div>
 
                 <div className="mb-8">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">আপনার ছবি (ঐচ্ছিক)</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">{lang === 'bn' ? 'আপনার ছবি (ঐচ্ছিক)' : 'Your Photo (Optional)'}</label>
                   <label className="flex items-center justify-center w-full h-24 px-4 transition bg-white border-2 border-[#eadfc4] border-dashed rounded-xl cursor-pointer hover:border-brand-green/50 hover:bg-brand-green/5">
                     <span className="flex items-center space-x-2 text-gray-500">
                       <ImageIcon className="w-5 h-5" />
-                      <span className="font-medium">ছবি আপলোড করুন</span>
+                      <span className="font-medium">{lang === 'bn' ? 'ছবি আপলোড করুন' : 'Upload Photo'}</span>
                     </span>
                     <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
                   </label>
                   {photo && (
                     <div className="mt-3 flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-[#eadfc4]">
-                      <span className="text-sm text-brand-green font-medium">ছবি যুক্ত করা হয়েছে</span>
-                      <button onClick={() => setPhoto(null)} className="text-brand-red text-sm font-medium hover:underline">মুছুন</button>
+                      <span className="text-sm text-brand-green font-medium">{lang === 'bn' ? 'ছবি যুক্ত করা হয়েছে' : 'Photo Added'}</span>
+                      <button onClick={() => setPhoto(null)} className="text-brand-red text-sm font-medium hover:underline">{lang === 'bn' ? 'মুছুন' : 'Remove'}</button>
                     </div>
                   )}
                 </div>
@@ -343,20 +368,20 @@ function App() {
                     disabled={isGenerating}
                     className="w-full bg-brand-green text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-900 disabled:opacity-50 transition-colors shadow-sm"
                   >
-                    <Download size={20} /> {isGenerating ? 'অপেক্ষা করুন...' : 'ডাউনলোড'}
+                    <Download size={20} /> {isGenerating ? (lang === 'bn' ? 'অপেক্ষা করুন...' : 'Please wait...') : (lang === 'bn' ? 'ডাউনলোড' : 'Download')}
                   </button>
                   <button 
                     onClick={handleNativeShare}
                     disabled={isGenerating}
                     className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-sm"
                   >
-                    <Share2 size={20} /> শেয়ার করুন
+                    <Share2 size={20} /> {lang === 'bn' ? 'শেয়ার করুন' : 'Share'}
                   </button>
                   <button 
                     onClick={handleChallengeLink}
                     className="w-full bg-brand-red text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-red-700 transition-colors shadow-sm"
                   >
-                    <Link2 size={20} /> বন্ধুকে চ্যালেঞ্জ করুন
+                    <Link2 size={20} /> {lang === 'bn' ? 'বন্ধুকে চ্যালেঞ্জ করুন' : 'Challenge a Friend'}
                   </button>
                 </div>
               </div>
@@ -427,7 +452,7 @@ function App() {
       {selected.size > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#f0e8d2] px-6 py-4 lg:hidden z-50 flex items-center justify-between shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
           <div className="font-bold text-brand-green text-lg">
-            স্কোর: {enToBn(selected.size)} / {enToBn(TOTAL)}
+            {lang === 'bn' ? 'স্কোর:' : 'Score:'} {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)}
           </div>
           <button 
             onClick={() => {
@@ -435,7 +460,7 @@ function App() {
             }}
             className="bg-brand-red text-white px-6 py-2.5 rounded-full font-bold shadow-sm"
           >
-            পোস্টার বানান
+            {lang === 'bn' ? 'পোস্টার বানান' : 'Make Poster'}
           </button>
         </div>
       )}

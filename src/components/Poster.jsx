@@ -16,7 +16,7 @@ const CREAM = '#fbf6ea';
  * Avoid CSS features html2canvas can't render (backdrop-filter, bg-clip:text, line-clamp).
  */
 const Poster = forwardRef(function Poster(
-  { selected, name, photo, interactive = false, activeId = null, onToggle, onHover },
+  { selected, name, photo, interactive = false, activeId = null, onToggle, onHover, lang = 'bn' },
   ref
 ) {
   const count = selected.size;
@@ -79,9 +79,13 @@ const Poster = forwardRef(function Poster(
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 58, fontWeight: 700, color: '#fff', lineHeight: 1.2, wordBreak: 'break-word' }}>
-            {name?.trim() ? `${name.trim()} এর খাবারের মানচিত্র` : 'আমার খাবারের মানচিত্র'}
+            {lang === 'bn' 
+              ? (name?.trim() ? `${name.trim()} এর খাবারের মানচিত্র` : 'আমার খাবারের মানচিত্র')
+              : (name?.trim() ? `${name.trim()}'s Food Map` : 'My Food Map')}
           </div>
-          <div style={{ fontSize: 28, color: '#cfe3d9', marginTop: 10 }}>বাংলাদেশের বিখ্যাত খাবারের ভ্রমণ</div>
+          <div style={{ fontSize: 28, color: '#cfe3d9', marginTop: 10 }}>
+            {lang === 'bn' ? 'বাংলাদেশের বিখ্যাত খাবারের ভ্রমণ' : 'A Culinary Journey Through Bangladesh'}
+          </div>
         </div>
       </div>
 
@@ -104,6 +108,7 @@ const Poster = forwardRef(function Poster(
         >
           <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <BDMap
+              lang={lang}
               selected={selected}
               interactive={interactive}
               activeId={activeId}
@@ -124,10 +129,10 @@ const Poster = forwardRef(function Poster(
               color: '#fff',
             }}
           >
-            <div style={{ fontSize: 24, color: '#cfe3d9', marginBottom: 4 }}>আমার স্কোর</div>
+            <div style={{ fontSize: 24, color: '#cfe3d9', marginBottom: 4 }}>{lang === 'bn' ? 'আমার স্কোর' : 'My Score'}</div>
             <div style={{ lineHeight: 1.05 }}>
-              <span style={{ fontSize: 96, fontWeight: 700, color: GOLD }}>{count}</span>
-              <span style={{ fontSize: 36, fontWeight: 600, opacity: 0.8 }}>/{TOTAL} জেলা</span>
+              <span style={{ fontSize: 96, fontWeight: 700, color: GOLD }}>{lang === 'bn' ? String(count).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : count}</span>
+              <span style={{ fontSize: 36, fontWeight: 600, opacity: 0.8 }}>/{lang === 'bn' ? String(TOTAL).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : TOTAL} {lang === 'bn' ? 'জেলা' : 'Districts'}</span>
             </div>
             <div style={{ marginTop: 14, height: 14, borderRadius: 999, background: 'rgba(255,255,255,0.18)' }}>
               <div
@@ -139,7 +144,7 @@ const Poster = forwardRef(function Poster(
                 }}
               />
             </div>
-            <div style={{ fontSize: 22, marginTop: 8, color: '#cfe3d9' }}>{pct}% সম্পন্ন</div>
+            <div style={{ fontSize: 22, marginTop: 8, color: '#cfe3d9' }}>{lang === 'bn' ? String(pct).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : pct}% {lang === 'bn' ? 'সম্পন্ন' : 'Completed'}</div>
           </div>
 
           <div
@@ -151,7 +156,7 @@ const Poster = forwardRef(function Poster(
               textAlign: 'center',
             }}
           >
-            <div style={{ fontSize: 20, color: '#8a7a4a', marginBottom: 4 }}>আমার লেভেল</div>
+            <div style={{ fontSize: 20, color: '#8a7a4a', marginBottom: 4 }}>{lang === 'bn' ? 'আমার লেভেল' : 'My Level'}</div>
             <div style={{ fontSize: 30, fontWeight: 700, color: '#df2a38', lineHeight: 1.25 }}>{level}</div>
           </div>
 
@@ -180,10 +185,10 @@ const Poster = forwardRef(function Poster(
                   }}
                 />
                 <span style={{ flex: 1, fontSize: 23, fontWeight: 600, color: GREEN }}>
-                  {d.bn.replace(' বিভাগ', '')}
+                  {lang === 'bn' ? d.bn.replace(' বিভাগ', '') : d.en.replace(' Division', '')}
                 </span>
                 <span style={{ fontSize: 23, fontWeight: 700, color: d.done ? d.color : '#a39b86' }}>
-                  {d.done}/{d.total}
+                  {lang === 'bn' ? String(d.done).replace(/\d/g, n => '০১২৩৪৫৬৭৮৯'[n]) : d.done}/{lang === 'bn' ? String(d.total).replace(/\d/g, n => '০১২৩৪৫৬৭৮৯'[n]) : d.total}
                 </span>
               </div>
             ))}
@@ -203,7 +208,7 @@ const Poster = forwardRef(function Poster(
           flexShrink: 0,
         }}
       >
-        <div style={{ fontSize: 28, color: '#cfe3d9' }}>আপনি কয়টা জেলার খাবার খেয়েছেন?</div>
+        <div style={{ fontSize: 28, color: '#cfe3d9' }}>{lang === 'bn' ? 'আপনি কয়টা জেলার খাবার খেয়েছেন?' : 'How many district foods have you eaten?'}</div>
         <div style={{ fontSize: 40, fontWeight: 700, color: GOLD, letterSpacing: 0.5 }}>Food Bingo BD</div>
       </div>
     </div>

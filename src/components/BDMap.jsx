@@ -9,7 +9,7 @@ const STROKE = '#fbf6ea';
  * Pure SVG Bangladesh district map.
  * Uses plain fill/stroke attributes (not CSS classes) so html2canvas exports it faithfully.
  */
-function BDMap({ selected, activeId = null, interactive = false, onToggle, onHover }) {
+function BDMap({ selected, activeId = null, interactive = false, onToggle, onHover, lang = 'bn' }) {
   // paint order: muted -> eaten -> active (so active stroke is never covered)
   const ordered = [...mapData.districts].sort((a, b) => {
     const score = (d) => (d.id === activeId ? 2 : selected.has(d.id) ? 1 : 0);
@@ -45,7 +45,7 @@ function BDMap({ selected, activeId = null, interactive = false, onToggle, onHov
             tabIndex={0}
             role="button"
             aria-pressed={eaten}
-            aria-label={`${info.districtBn} — ${info.foodBn}`}
+            aria-label={lang === 'bn' ? `${info.districtBn} — ${info.foodBn}` : `${info.districtEn} — ${info.foodEn}`}
             onClick={() => onToggle?.(d.id)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {

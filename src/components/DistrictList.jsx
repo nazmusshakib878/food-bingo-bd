@@ -4,7 +4,7 @@ import { DIVISIONS, districts, TOTAL } from '../data/districts';
 
 const norm = (s) => s.toLowerCase().trim();
 
-export default function DistrictList({ selected, onToggle, onSetMany, onClear, onHover, activeId }) {
+export default function DistrictList({ selected, onToggle, onSetMany, onClear, onHover, activeId, lang = 'bn' }) {
   const [query, setQuery] = useState('');
   const [collapsed, setCollapsed] = useState({});
   const q = norm(query);
@@ -27,9 +27,9 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
     <div className="bg-white rounded-[28px] border border-[#eadfc4] shadow-soft overflow-hidden flex flex-col lg:h-[calc(100vh-7rem)] lg:min-h-[560px]">
       <div className="p-5 md:p-6 border-b border-[#f0e8d2] bg-gradient-to-b from-[#fffdf7] to-white">
         <h2 className="text-xl md:text-2xl font-bold text-brand-green leading-snug">
-          যেসব জেলার বিখ্যাত খাবার খেয়েছি
+          {lang === 'bn' ? 'যেসব জেলার বিখ্যাত খাবার খেয়েছি' : 'Famous Foods I Have Eaten'}
         </h2>
-        <p className="text-sm text-gray-500 mt-1">জেলা বা খাবারে ট্যাপ করে চিহ্নিত করুন</p>
+        <p className="text-sm text-gray-500 mt-1">{lang === 'bn' ? 'জেলা বা খাবারে ট্যাপ করে চিহ্নিত করুন' : 'Tap a district or food to mark it'}</p>
 
         <div className="relative mt-4">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -38,7 +38,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="জেলা বা খাবার খুঁজুন… (রসমালাই, Cumilla)"
+            placeholder={lang === 'bn' ? "জেলা বা খাবার খুঁজুন… (রসমালাই, Cumilla)" : "Search district or food..."}
             className="w-full pl-11 pr-4 py-3 rounded-2xl border border-[#eadfc4] bg-[#fdfaf2] focus:bg-white focus:border-brand-green focus:ring-2 focus:ring-brand-green/15 outline-none text-base"
           />
         </div>
@@ -47,7 +47,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
           <div className="text-sm font-semibold text-brand-green">
             <span className="text-2xl font-bold">{selected.size}</span>
             <span className="text-brand-red font-bold"> / {TOTAL}</span>
-            <span className="text-gray-500 font-medium"> জেলা</span>
+            <span className="text-gray-500 font-medium">{lang === 'bn' ? ' জেলা' : ' Districts'}</span>
           </div>
           <button
             id="clear-all"
@@ -56,14 +56,14 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
             }}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-brand-red px-3 py-1.5 rounded-full border border-transparent hover:border-red-100 hover:bg-red-50 transition"
           >
-            <RefreshCcw size={14} /> সব মুছুন
+            <RefreshCcw size={14} /> {lang === 'bn' ? 'সব মুছুন' : 'Clear All'}
           </button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 max-h-[70vh] lg:max-h-none">
         {groups.length === 0 && (
-          <div className="text-center text-gray-500 py-12">কোনো ফলাফল পাওয়া যায়নি।</div>
+          <div className="text-center text-gray-500 py-12">{lang === 'bn' ? 'কোনো ফলাফল পাওয়া যায়নি।' : 'No results found.'}</div>
         )}
         {groups.map(({ div, all, shown }) => {
           const done = all.filter((d) => selected.has(d.id)).length;
@@ -78,7 +78,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                   aria-expanded={isOpen}
                 >
                   <span className="w-3 h-3 rounded-full shrink-0" style={{ background: div.color }} />
-                  <span className="font-bold text-brand-green">{div.bn}</span>
+                  <span className="font-bold text-brand-green">{lang === 'bn' ? div.bn : div.en}</span>
                   <span
                     className="text-xs font-bold px-2 py-0.5 rounded-full text-white"
                     style={{ background: done ? div.color : '#b9b19b' }}
@@ -94,7 +94,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                   onClick={() => onSetMany(all.map((d) => d.id), !allDone)}
                   className="text-xs font-semibold px-2.5 py-1 rounded-full border border-[#eadfc4] text-brand-green hover:bg-brand-green hover:text-white transition"
                 >
-                  {allDone ? 'সব বাদ' : 'সব বাছাই'}
+                  {lang === 'bn' ? (allDone ? 'সব বাদ' : 'সব বাছাই') : (allDone ? 'Unselect All' : 'Select All')}
                 </button>
               </header>
 
@@ -126,10 +126,10 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                           </span>
                           <span className="min-w-0 flex-1">
                             <span className="block font-bold text-[15px] leading-tight text-brand-dark">
-                              {d.districtBn}
+                              {lang === 'bn' ? d.districtBn : d.districtEn}
                             </span>
                             <span className="block text-[13px] leading-tight text-gray-500 line-clamp-2 mt-0.5">
-                              {d.foodBn}
+                              {lang === 'bn' ? d.foodBn : d.foodEn}
                             </span>
                           </span>
                           {d.image && (
