@@ -195,7 +195,7 @@ function App() {
   const pct = TOTAL ? Math.round((selected.size / TOTAL) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-brand-cream font-bangla text-brand-dark pb-24 lg:pb-0">
+    <div className="min-h-screen overflow-x-hidden bg-brand-cream font-bangla text-brand-dark pb-24 lg:pb-0">
       {/* Navbar */}
       <nav className="bg-white border-b border-[#f0e8d2] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
@@ -215,7 +215,7 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header id="hero" className="relative mx-auto max-w-3xl px-5 py-12 text-center md:py-16">
+      <header id="hero" className="relative mx-auto max-w-3xl px-5 py-12 text-center md:py-16 -mb-6 md:-mb-10">
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
           <svg 
             viewBox={`0 0 ${mapData.width} ${mapData.height}`} 
@@ -233,7 +233,7 @@ function App() {
 
         <div className="relative z-10 flex flex-col items-center">
           <h1 
-            className="font-extrabold text-[#0f3d2e] mb-4 [text-wrap:balance]"
+            className="max-w-full font-extrabold text-[#0f3d2e] mb-4 [text-wrap:balance]"
             style={{ 
               fontFamily: "'Hind Siliguri', sans-serif", 
               fontSize: "clamp(1.9rem, 6vw, 3.4rem)", 
@@ -253,7 +253,7 @@ function App() {
             )}
           </h1>
           
-          <p className="max-w-xl mx-auto text-[#3b5a49] mt-4 [text-wrap:balance]" style={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
+          <p className="w-full max-w-xl mx-auto text-[#3b5a49] mt-4 [text-wrap:balance]" style={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
             {lang === 'bn' 
               ? 'ঢাকার কাচ্চি থেকে পদ্মার ইলিশ, যে জেলার সিগনেচার খাবার খেয়েছেন সেটা বেছে নিন। সেই জেলা রঙে ভরে উঠবে। শেষে মানচিত্র শেয়ার করে বন্ধুদের চ্যালেঞ্জ করুন।'
               : "From Dhaka's Kacchi to Padma's Ilish, pick the signature foods you've eaten. The district will fill with color. Then share the map and challenge friends."}
@@ -265,7 +265,7 @@ function App() {
               const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
               target?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             }}
-            className="mt-8 px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="mt-8 max-w-full whitespace-normal px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
             {selected.size > 0 
               ? (lang === 'bn' ? 'মানচিত্রে ফিরে যান' : 'Return to Map')
@@ -276,7 +276,7 @@ function App() {
             <span className="text-[0.875rem] text-[#5c7a69]">
               {lang === 'bn' ? 'লগইন লাগবে না, কয়েক মিনিটেই শেষ।' : 'No login required, takes just a few minutes.'}
             </span>
-            <div className="mt-2 flex items-center gap-3">
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
               <span className="text-[0.875rem] font-bold text-[#0f6b4f]">
                 {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)} {lang === 'bn' ? 'জেলা' : 'Districts'}
               </span>
@@ -332,7 +332,7 @@ function App() {
 
           {/* Right: Bangladesh Map */}
           <div className="flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
-            <div className="h-full max-h-full w-auto max-w-full aspect-[7/9] shrink flex items-center justify-center">
+            <div className="w-full h-auto aspect-[7/9] shrink flex items-center justify-center lg:h-full lg:max-h-full lg:w-auto lg:max-w-full">
               <BDMap
                 lang={lang}
                 selected={selected}
