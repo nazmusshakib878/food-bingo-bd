@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
   "dependencies": {
+    "@upstash/redis": "^1.39.0",
+    "@vercel/analytics": "^2.0.1",
     "axios": "^1.20.0",
     "canvas-confetti": "^1.9.4",
     "d3-geo": "^3.1.1",

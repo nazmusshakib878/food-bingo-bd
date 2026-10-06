@@ -5,6 +5,18 @@ import Poster, { POSTER_W, POSTER_H } from './components/Poster';
 import { TOTAL } from './data/districts';
 import mapData from './data/bdMap.json';
 import { Download, Share2, Image as ImageIcon, Link2 } from 'lucide-react';
+import useVisitorCount from './hooks/useVisitorCount';
+import { Analytics } from '@vercel/analytics/react';
+import { track } from '@vercel/analytics';
+
+const trackFirstDistrictSelection = () => {
+  try {
+    if (!sessionStorage.getItem('foodbingo:district-selected:v1')) {
+      sessionStorage.setItem('foodbingo:district-selected:v1', '1');
+      track('district_selected');
+    }
+  } catch {}
+};
 
 const localizeNum = (num, lang) => lang === 'bn' ? String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : num;
 
@@ -47,6 +59,7 @@ function App() {
   const posterRef = useRef(null);
   const previewContainerRef = useRef(null);
   const [previewScale, setPreviewScale] = useState(1);
+  const { count: visitorCount, loading: visitorLoading, unavailable: visitorUnavailable } = useVisitorCount();
 
   useEffect(() => {
     if (!previewContainerRef.current) return;
@@ -64,6 +77,7 @@ function App() {
     localStorage.setItem('foodbingobd_districts', JSON.stringify([...selected]));
   }, [selected]);
 
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const c = params.get('c');
@@ -74,15 +88,17 @@ function App() {
   }, []);
 
   const handleToggle = useCallback((id) => {
+    if (!selected.has(id)) { trackFirstDistrictSelection(); }
     setSelected((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
     });
-  }, []);
+  }, [selected]);
 
   const handleSetMany = useCallback((ids, on) => {
+    if (on) { trackFirstDistrictSelection(); }
     setSelected((prev) => {
       const next = new Set(prev);
       if (on) ids.forEach((id) => next.add(id));
@@ -137,6 +153,7 @@ function App() {
 
   const downloadFile = async () => {
     if (!posterRef.current || selected.size === 0) return;
+    track('poster_download', { format: 'png' });
     setIsGenerating(true);
     try {
       const blob = await exportCanvasBlob();
@@ -159,6 +176,7 @@ function App() {
 
   const handleNativeShare = async () => {
     if (!posterRef.current || selected.size === 0) return;
+    track('share_click');
     setIsGenerating(true);
     const url = 'https://food-bingo-bd.vercel.app/';
     const shareText = `আমি বাংলাদেশের ${enToBn(selected.size)}/১০০ খাবার খেয়েছি! তুমি কয়টা খেয়েছ? 👇 ${url}`;
@@ -185,6 +203,7 @@ function App() {
   };
 
   const handleChallengeLink = () => {
+    track('challenge_click');
     const n = name.trim() || 'একজন বন্ধু';
     const c = encodeChallenge(n, selected.size);
     const url = `https://food-bingo-bd.vercel.app/?c=${c}`;
@@ -274,8 +293,17 @@ function App() {
 
           <div className="mt-3 text-center flex flex-col items-center">
             <span className="text-[0.875rem] text-[#5c7a69]">
-              {lang === 'bn' ? 'লগইন লাগবে না, কয়েক মিনিটেই শেষ।' : 'No login required, takes just a few minutes.'}
+              {lang === 'bn' ? 'আপনার বাছাই শুধু আপনার ব্রাউজারেই থাকে। আমরা শুধু মোট ব্যবহারকারীর সংখ্যা গুনি।' : 'Your selections stay in your browser; we only count total users.'}
             </span>
+            {visitorLoading && <div className="mt-3 h-9 w-56 animate-pulse rounded-full border border-[#d7e4da] bg-white/80" aria-label="Loading visitor count" />}
+            {visitorUnavailable && <div className="mt-3 rounded-full border border-[#d7e4da] bg-white/80 px-4 py-2 text-sm text-[#5c7a69]">লাইভ ভিজিটর সংখ্যা এই মুহূর্তে পাওয়া যাচ্ছে না</div>}
+            {visitorCount !== null && (
+              <div className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full border border-[#d7e4da] bg-white/80 px-4 py-2 text-sm text-[#1f3a2c]">
+                <span className="h-2 w-2 shrink-0 rounded-full bg-[#22c55e] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
+                <span className="font-bold">{new Intl.NumberFormat('bn-BD').format(visitorCount)} জন ইতিমধ্যে এই খাবারের মানচিত্র দেখেছেন</span>
+              </div>
+            )}
+            <span className="mt-2 text-xs text-[#5c7a69]">ভিজিটর গণনার জন্য একটি নামবিহীন ব্রাউজার আইডি ব্যবহার করা হয়। নাম বা ইমেইল সংগ্রহ করা হয় না।</span>
             <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
               <span className="text-[0.875rem] font-bold text-[#0f6b4f]">
                 {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)} {lang === 'bn' ? 'জেলা' : 'Districts'}
@@ -482,7 +510,7 @@ function App() {
       )}
 
       {/* Footer / Credits Section */}
-      <footer id="credits" className="bg-white py-12 px-4 border-t border-[#f0e8d2] text-center">
+      <footer className="bg-white py-12 px-4 border-t border-[#f0e8d2] text-center">
         <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
           <p className="text-xl text-gray-700 font-medium mb-2">
             Made by{' '}
@@ -518,6 +546,7 @@ function App() {
           </button>
         </div>
       )}
+      <Analytics />
     </div>
   );
 }
