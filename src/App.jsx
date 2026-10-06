@@ -219,7 +219,7 @@ function App() {
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
           <svg 
             viewBox={`0 0 ${mapData.width} ${mapData.height}`} 
-            className="h-[240px] md:h-[320px] opacity-[0.08]" 
+            className="h-[240px] md:h-[320px] opacity-[0.06]" 
             fill="none" 
             stroke="#0f6b4f" 
             strokeWidth="3"
@@ -236,17 +236,27 @@ function App() {
             className="font-extrabold text-[#0f3d2e] mb-4 [text-wrap:balance]"
             style={{ 
               fontFamily: "'Hind Siliguri', sans-serif", 
-              fontSize: "clamp(1.9rem, 5.2vw, 3.4rem)", 
-              lineHeight: 1.3 
+              fontSize: "clamp(1.9rem, 6vw, 3.4rem)", 
+              lineHeight: 1.35 
             }}
           >
-            {lang === 'bn' ? '৬৪ জেলার স্বাদ, আপনি কয়টা চেখেছেন?' : 'Tastes of 64 Districts, How Many Have You Tried?'}
+            {lang === 'bn' ? (
+              <>
+                <span className="block">খাবার দিয়ে রঙিন করুন</span>
+                <span className="block">বাংলাদেশের মানচিত্র</span>
+              </>
+            ) : (
+              <>
+                <span className="block">Color with Food</span>
+                <span className="block">The Map of Bangladesh</span>
+              </>
+            )}
           </h1>
           
           <p className="max-w-xl mx-auto text-[#3b5a49] mt-4 [text-wrap:balance]" style={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
             {lang === 'bn' 
-              ? 'ঢাকার কাচ্চি থেকে বগুড়ার দই, জেলার সিগনেচার খাবার খেয়ে থাকলে মানচিত্রে রঙ করুন। শেষে নিজের খাবারের মানচিত্র শেয়ার করে বন্ধুদের চ্যালেঞ্জ করুন।'
-              : "From Dhaka's Kacchi to Bogura's Doi, color the map if you've eaten a district's signature food. Share your food map and challenge friends."}
+              ? 'ঢাকার কাচ্চি থেকে পদ্মার ইলিশ, যে জেলার সিগনেচার খাবার খেয়েছেন সেটা বেছে নিন। সেই জেলা রঙে ভরে উঠবে। শেষে মানচিত্র শেয়ার করে বন্ধুদের চ্যালেঞ্জ করুন।'
+              : "From Dhaka's Kacchi to Padma's Ilish, pick the signature foods you've eaten. The district will fill with color. Then share the map and challenge friends."}
           </p>
 
           <button 
