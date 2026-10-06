@@ -215,7 +215,7 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header id="hero" className="relative pt-12 pb-6 md:pt-16 md:pb-6 px-5 text-center max-w-3xl mx-auto">
+      <header id="hero" className="relative mx-auto max-w-3xl px-5 py-12 text-center md:py-16">
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
           <svg 
             viewBox={`0 0 ${mapData.width} ${mapData.height}`} 
@@ -261,8 +261,9 @@ function App() {
 
           <button 
             onClick={() => {
-              document.getElementById('district-search')?.focus();
-              window.scrollTo({ top: 500, behavior: 'smooth' });
+              const target = document.getElementById('district-search');
+              const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              target?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
             }}
             className="mt-8 px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
@@ -300,9 +301,10 @@ function App() {
             </h2>
             <button 
               onClick={() => {
-                document.getElementById('district-search')?.focus();
-                window.scrollTo({ top: 500, behavior: 'smooth' });
-              }}
+              const target = document.getElementById('district-search');
+              const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+              target?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+            }}
               className="mt-2 px-8 py-3 bg-brand-red text-white text-lg font-bold rounded-full shadow hover:bg-red-700 transition"
             >
               Start
@@ -312,7 +314,7 @@ function App() {
       )}
 
       {/* Main Interactive Section */}
-      <main className="max-w-[1400px] mx-auto px-4 md:px-6 mb-24">
+      <main className="-mt-6 md:-mt-10 max-w-[1400px] mx-auto px-4 md:px-6 mb-24">
         <div className="flex flex-col-reverse lg:flex-row gap-6 lg:gap-10">
           
           {/* Left: District List */}
@@ -330,7 +332,7 @@ function App() {
 
           {/* Right: Bangladesh Map */}
           <div className="flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
-            <div className="w-full max-w-[700px] aspect-[4/5] relative flex items-center justify-center">
+            <div className="h-full max-h-full w-auto max-w-full aspect-[7/9] shrink flex items-center justify-center">
               <BDMap
                 lang={lang}
                 selected={selected}
