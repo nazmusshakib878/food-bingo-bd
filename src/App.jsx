@@ -3,6 +3,7 @@ import DistrictList from './components/DistrictList';
 import BDMap from './components/BDMap';
 import Poster, { POSTER_W, POSTER_H } from './components/Poster';
 import { TOTAL } from './data/districts';
+import mapData from './data/bdMap.json';
 import { Download, Share2, Image as ImageIcon, Link2 } from 'lucide-react';
 
 const localizeNum = (num, lang) => lang === 'bn' ? String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]) : num;
@@ -214,28 +215,69 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header className="py-8 md:py-12 px-4 text-center max-w-4xl mx-auto">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-green mb-4 leading-tight [text-wrap:balance]">
-          {lang === 'bn' ? (
-            <>আপনার খাওয়া <span className="text-brand-red">জেলার খাবার</span> চিহ্নিত করুন</>
-          ) : (
-            <>Mark the <span className="text-brand-red">District Foods</span> You Have Eaten</>
-          )}
-        </h1>
-        <p className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed [text-wrap:balance]">
-          {lang === 'bn' 
-            ? 'বাংলাদেশের ৬৪ জেলার বিখ্যাত সব খাবার। আপনি কোন কোন জেলার সিগনেচার খাবারগুলো খেয়েছেন? ম্যাপে ক্লিক করে আপনার স্কোর তৈরি করুন!'
-            : 'Famous signature foods from all 64 districts of Bangladesh. Which ones have you tried? Click the map to build your score!'}
-        </p>
-        <button 
-          onClick={() => {
-            document.getElementById('district-search')?.focus();
-            window.scrollTo({ top: 500, behavior: 'smooth' });
-          }}
-          className="px-8 py-3 bg-brand-green text-white text-lg font-bold rounded-full shadow-md hover:bg-green-900 transition"
-        >
-          {lang === 'bn' ? 'শুরু করুন' : 'Get Started'}
-        </button>
+      <header id="hero" className="relative pt-12 pb-6 md:pt-16 md:pb-6 px-5 text-center max-w-3xl mx-auto">
+        <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
+          <svg 
+            viewBox={`0 0 ${mapData.width} ${mapData.height}`} 
+            className="h-[240px] md:h-[320px] opacity-[0.08]" 
+            fill="none" 
+            stroke="#0f6b4f" 
+            strokeWidth="3"
+            strokeLinejoin="round"
+          >
+            {mapData.districts.map(d => (
+              <path key={d.id} d={d.d} />
+            ))}
+          </svg>
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center">
+          <h1 
+            className="font-extrabold text-[#0f3d2e] mb-4 [text-wrap:balance]"
+            style={{ 
+              fontFamily: "'Hind Siliguri', sans-serif", 
+              fontSize: "clamp(1.9rem, 5.2vw, 3.4rem)", 
+              lineHeight: 1.3 
+            }}
+          >
+            {lang === 'bn' ? '৬৪ জেলার স্বাদ, আপনি কয়টা চেখেছেন?' : 'Tastes of 64 Districts, How Many Have You Tried?'}
+          </h1>
+          
+          <p className="max-w-xl mx-auto text-[#3b5a49] mt-4 [text-wrap:balance]" style={{ fontSize: '1.05rem', lineHeight: 1.8 }}>
+            {lang === 'bn' 
+              ? 'ঢাকার কাচ্চি থেকে বগুড়ার দই, জেলার সিগনেচার খাবার খেয়ে থাকলে মানচিত্রে রঙ করুন। শেষে নিজের খাবারের মানচিত্র শেয়ার করে বন্ধুদের চ্যালেঞ্জ করুন।'
+              : "From Dhaka's Kacchi to Bogura's Doi, color the map if you've eaten a district's signature food. Share your food map and challenge friends."}
+          </p>
+
+          <button 
+            onClick={() => {
+              document.getElementById('district-search')?.focus();
+              window.scrollTo({ top: 500, behavior: 'smooth' });
+            }}
+            className="mt-8 px-8 py-3.5 bg-[#0f6b4f] text-white font-semibold rounded-full shadow-[0_4px_14px_0_rgba(15,107,79,0.39)] hover:shadow-[0_6px_20px_rgba(15,107,79,0.23)] hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-[#0f6b4f]/30 transition-all motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+          >
+            {selected.size > 0 
+              ? (lang === 'bn' ? 'মানচিত্রে ফিরে যান' : 'Return to Map')
+              : (lang === 'bn' ? 'আমার মানচিত্র রঙ করি' : 'Color My Map')}
+          </button>
+
+          <div className="mt-3 text-center flex flex-col items-center">
+            <span className="text-[0.875rem] text-[#5c7a69]">
+              {lang === 'bn' ? 'লগইন লাগবে না, কয়েক মিনিটেই শেষ।' : 'No login required, takes just a few minutes.'}
+            </span>
+            <div className="mt-2 flex items-center gap-3">
+              <span className="text-[0.875rem] font-bold text-[#0f6b4f]">
+                {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)} {lang === 'bn' ? 'জেলা' : 'Districts'}
+              </span>
+              <div className="w-[120px] h-[6px] rounded-full bg-[#d7e4da] overflow-hidden">
+                <div 
+                  className="h-full bg-[#0f6b4f] rounded-full transition-all duration-500 ease-out" 
+                  style={{ width: `${(selected.size / TOTAL) * 100}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </header>
 
       {challengeData && (
