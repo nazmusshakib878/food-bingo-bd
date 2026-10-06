@@ -24,7 +24,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
   );
 
   return (
-    <div className="bg-white rounded-[28px] border border-[#eadfc4] shadow-soft overflow-hidden flex flex-col lg:h-[calc(100vh-7rem)] lg:min-h-[560px]">
+    <div className="district-panel bg-white rounded-[28px] border border-[#eadfc4] shadow-soft overflow-hidden flex flex-col lg:h-[calc(100vh-7rem)] lg:min-h-[560px]">
       <div className="p-5 md:p-6 border-b border-[#f0e8d2] bg-gradient-to-b from-[#fffdf7] to-white">
         <h2 className="text-xl md:text-2xl font-bold text-brand-green leading-snug">
           {lang === 'bn' ? 'যেসব জেলার বিখ্যাত খাবার খেয়েছি' : 'Famous Foods I Have Eaten'}

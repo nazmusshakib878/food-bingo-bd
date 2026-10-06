@@ -238,7 +238,7 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header id="hero" className="relative mx-auto max-w-3xl px-5 py-12 text-center md:py-16 -mb-6 md:-mb-10">
+      <header id="hero" className="hero-panel relative mx-auto max-w-3xl px-5 py-12 text-center md:py-16 -mb-6 md:-mb-10">
         <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden" aria-hidden="true">
           <svg 
             viewBox={`0 0 ${mapData.width} ${mapData.height}`} 
@@ -416,7 +416,7 @@ function App() {
             <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
               
               {/* Settings Panel */}
-              <div className="w-full lg:w-1/3 bg-[#fdfaf2] p-8 rounded-3xl shadow-sm border border-[#eadfc4]">
+              <div className="poster-controls w-full lg:w-1/3 bg-[#fdfaf2] p-8 rounded-3xl shadow-sm border border-[#eadfc4]">
                 <div className="mb-6">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">{lang === 'bn' ? 'আপনার নাম' : 'Your Name'}</label>
                   <input 
@@ -474,7 +474,7 @@ function App() {
               <div className="w-full md:w-[450px] xl:w-[500px] flex items-center justify-center">
                 <div 
                   ref={previewContainerRef}
-                  className="bg-white shadow-2xl overflow-hidden" 
+                  className="poster-preview bg-white shadow-2xl overflow-hidden"
                   style={{
                     position: 'relative',
                     width: '100%', 
