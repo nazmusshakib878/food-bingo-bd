@@ -224,7 +224,7 @@ function App() {
               onClick={() => setLang(lang === 'bn' ? 'en' : 'bn')}
               className="text-sm font-bold border-2 border-brand-green text-brand-green rounded-full px-3 py-1 hover:bg-brand-green hover:text-white transition-colors"
             >
-              {lang === 'bn' ? 'EN' : 'বাংলা'}
+              {lang === 'bn' ? 'English' : 'বাংলা'}
             </button>
             <div className="font-bold bg-brand-green/10 text-brand-green px-4 py-1.5 rounded-full">
               {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)}
@@ -292,9 +292,7 @@ function App() {
           </button>
 
           <div className="mt-3 text-center flex flex-col items-center">
-            <span className="text-[0.875rem] text-[#5c7a69]">
-              {lang === 'bn' ? 'আপনার বাছাই শুধু আপনার ব্রাউজারেই থাকে। আমরা শুধু মোট ব্যবহারকারীর সংখ্যা গুনি।' : 'Your selections stay in your browser; we only count total users.'}
-            </span>
+
             {visitorLoading && <div className="mt-3 h-9 w-56 animate-pulse rounded-full border border-[#d7e4da] bg-white/80" aria-label="Loading visitor count" />}
             {visitorUnavailable && <div className="mt-3 rounded-full border border-[#d7e4da] bg-white/80 px-4 py-2 text-sm text-[#5c7a69]">লাইভ ভিজিটর সংখ্যা এই মুহূর্তে পাওয়া যাচ্ছে না</div>}
             {visitorCount !== null && (
@@ -303,7 +301,7 @@ function App() {
                 <span className="font-bold">{new Intl.NumberFormat('bn-BD').format(visitorCount)} জন ইতিমধ্যে এই খাবারের মানচিত্র দেখেছেন</span>
               </div>
             )}
-            <span className="mt-2 text-xs text-[#5c7a69]">ভিজিটর গণনার জন্য একটি নামবিহীন ব্রাউজার আইডি ব্যবহার করা হয়। নাম বা ইমেইল সংগ্রহ করা হয় না।</span>
+            
             <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
               <span className="text-[0.875rem] font-bold text-[#0f6b4f]">
                 {localizeNum(selected.size, lang)} / {localizeNum(TOTAL, lang)} {lang === 'bn' ? 'জেলা' : 'Districts'}
