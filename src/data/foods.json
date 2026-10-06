@@ -5,7 +5,7 @@
     "nameEn": "Kacchi Biryani",
     "category": "বিরিয়ানি ও পোলাও",
     "region": "পুরান ঢাকা",
-    "emoji": "🍲",
+    "emoji": "🍛",
     "image": "/foods/kacchi-biryani.webp"
   },
   {
@@ -14,17 +14,17 @@
     "nameEn": "Morog Polao",
     "category": "বিরিয়ানি ও পোলাও",
     "region": "পুরান ঢাকা",
-    "emoji": "🍛",
+    "emoji": "🍗",
     "image": "/foods/morog-polao.webp"
   },
   {
     "id": 3,
-    "nameBn": "ঢাকাই বিরিয়ানি (হাজির)",
-    "nameEn": "Dhakai Biryani",
+    "nameBn": "ঢাকাই তেহারি",
+    "nameEn": "Dhakai Tehari",
     "category": "বিরিয়ানি ও পোলাও",
     "region": "পুরান ঢাকা",
-    "emoji": "🍚",
-    "image": "/foods/dhakai-biryani.webp"
+    "emoji": "🍲",
+    "image": "/foods/dhakai-tehari.webp"
   },
   {
     "id": 4,
@@ -37,15 +37,6 @@
   },
   {
     "id": 5,
-    "nameBn": "ভুনা খিচুড়ি",
-    "nameEn": "Vuna Khichuri",
-    "category": "বিরিয়ানি ও পোলাও",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍛",
-    "image": "/foods/vuna-khichuri.webp"
-  },
-  {
-    "id": 6,
     "nameBn": "মেজবানি গরুর মাংস",
     "nameEn": "Mezbani Beef",
     "category": "মাংস",
@@ -54,7 +45,7 @@
     "image": "/foods/mezbani-beef.webp"
   },
   {
-    "id": 7,
+    "id": 6,
     "nameBn": "কালা ভুনা",
     "nameEn": "Kala Bhuna",
     "category": "মাংস",
@@ -63,25 +54,7 @@
     "image": "/foods/kala-bhuna.webp"
   },
   {
-    "id": 8,
-    "nameBn": "চাটগাঁইয়া গরুর রেজালা",
-    "nameEn": "Chatgaiya Beef Rezala",
-    "category": "মাংস",
-    "region": "চট্টগ্রাম",
-    "emoji": "🥘",
-    "image": "/foods/chatgaiya-beef-rezala.webp"
-  },
-  {
-    "id": 9,
-    "nameBn": "সাতকড়া গরুর মাংস",
-    "nameEn": "Shatkora Beef",
-    "category": "মাংস",
-    "region": "সিলেট",
-    "emoji": "🍲",
-    "image": "/foods/shatkora-beef.webp"
-  },
-  {
-    "id": 10,
+    "id": 7,
     "nameBn": "চুই ঝাল গরুর মাংস",
     "nameEn": "Chui Jhal Beef",
     "category": "মাংস",
@@ -90,52 +63,16 @@
     "image": "/foods/chui-jhal-beef.webp"
   },
   {
-    "id": 11,
-    "nameBn": "চুইঝালের খাসি",
-    "nameEn": "Chui Jhal Mutton",
+    "id": 8,
+    "nameBn": "সাতকড়া গরুর মাংস",
+    "nameEn": "Shatkora Beef",
     "category": "মাংস",
-    "region": "যশোর",
-    "emoji": "🍖",
-    "image": "/foods/chui-jhal-mutton.webp"
-  },
-  {
-    "id": 12,
-    "nameBn": "গরুর ভুনা",
-    "nameEn": "Beef Vuna",
-    "category": "মাংস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥩",
-    "image": "/foods/beef-vuna.webp"
-  },
-  {
-    "id": 13,
-    "nameBn": "খাসির রেজালা",
-    "nameEn": "Mutton Rezala",
-    "category": "মাংস",
-    "region": "সারা বাংলাদেশ",
+    "region": "সিলেট",
     "emoji": "🍲",
-    "image": "/foods/mutton-rezala.webp"
+    "image": "/foods/shatkora-beef.webp"
   },
   {
-    "id": 14,
-    "nameBn": "মুরগির রোস্ট",
-    "nameEn": "Chicken Roast",
-    "category": "মাংস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍗",
-    "image": "/foods/chicken-roast.webp"
-  },
-  {
-    "id": 15,
-    "nameBn": "হাঁসের মাংস ভুনা",
-    "nameEn": "Duck Vuna",
-    "category": "মাংস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🦆",
-    "image": "/foods/duck-vuna.webp"
-  },
-  {
-    "id": 16,
+    "id": 9,
     "nameBn": "ইলিশ ভাপা",
     "nameEn": "Vapa Ilish",
     "category": "মাছ ও সামুদ্রিক",
@@ -144,43 +81,16 @@
     "image": "/foods/vapa-ilish.webp"
   },
   {
-    "id": 17,
+    "id": 10,
     "nameBn": "সর্ষে ইলিশ",
     "nameEn": "Shorshe Ilish",
     "category": "মাছ ও সামুদ্রিক",
     "region": "বরিশাল ও চাঁদপুর",
-    "emoji": "🍛",
+    "emoji": "🐠",
     "image": "/foods/shorshe-ilish.webp"
   },
   {
-    "id": 18,
-    "nameBn": "ইলিশ ভাজা",
-    "nameEn": "Ilish Vaja",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "বরিশাল ও চাঁদপুর",
-    "emoji": "🐠",
-    "image": "/foods/ilish-vaja.webp"
-  },
-  {
-    "id": 19,
-    "nameBn": "ইলিশ পাতুরি",
-    "nameEn": "Ilish Paturi",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "বরিশাল ও চাঁদপুর",
-    "emoji": "🍃",
-    "image": "/foods/ilish-paturi.webp"
-  },
-  {
-    "id": 20,
-    "nameBn": "লইট্টা ফ্রাই",
-    "nameEn": "Loitta Fry",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "কক্সবাজার",
-    "emoji": "🍤",
-    "image": "/foods/loitta-fry.webp"
-  },
-  {
-    "id": 21,
+    "id": 11,
     "nameBn": "লইট্টা শুঁটকি ভুনা",
     "nameEn": "Loitta Shutki Vuna",
     "category": "মাছ ও সামুদ্রিক",
@@ -189,43 +99,7 @@
     "image": "/foods/loitta-shutki-vuna.webp"
   },
   {
-    "id": 22,
-    "nameBn": "কোরাল মাছের ঝোল",
-    "nameEn": "Koral Macher Jhol",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "কক্সবাজার",
-    "emoji": "🍲",
-    "image": "/foods/koral-macher-jhol.webp"
-  },
-  {
-    "id": 23,
-    "nameBn": "বাগদা চিংড়ির মালাইকারি",
-    "nameEn": "Bagda Prawn Malaikari",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "খুলনা",
-    "emoji": "🦐",
-    "image": "/foods/bagda-prawn-malaikari.webp"
-  },
-  {
-    "id": 24,
-    "nameBn": "গলদা চিংড়ি ভুনা",
-    "nameEn": "Golda Prawn Vuna",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "খুলনা",
-    "emoji": "🍤",
-    "image": "/foods/golda-prawn-vuna.webp"
-  },
-  {
-    "id": 25,
-    "nameBn": "সুন্দরবনের কাঁকড়া ভুনা",
-    "nameEn": "Sundarbans Crab Vuna",
-    "category": "মাছ ও সামুদ্রিক",
-    "region": "খুলনা",
-    "emoji": "🦀",
-    "image": "/foods/sundarbans-crab-vuna.webp"
-  },
-  {
-    "id": 26,
+    "id": 12,
     "nameBn": "রূপচাঁদা ফ্রাই",
     "nameEn": "Rupchanda Fry",
     "category": "মাছ ও সামুদ্রিক",
@@ -234,214 +108,124 @@
     "image": "/foods/rupchanda-fry.webp"
   },
   {
-    "id": 27,
-    "nameBn": "দিনাজপুরের কাটারিভোগ চালের ভাত",
-    "nameEn": "Kataribhog Rice",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "দিনাজপুর",
-    "emoji": "🍚",
-    "image": "/foods/kataribhog-rice.webp"
+    "id": 13,
+    "nameBn": "চিংড়ির মালাইকারি",
+    "nameEn": "Prawn Malaikari",
+    "category": "মাছ ও সামুদ্রিক",
+    "region": "খুলনা",
+    "emoji": "🍤",
+    "image": "/foods/prawn-malaikari.webp"
   },
   {
-    "id": 28,
-    "nameBn": "শেরপুরের তুলসীমালা চালের ভাত",
-    "nameEn": "Tulshimala Rice",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "শেরপুর",
-    "emoji": "🍚",
-    "image": "/foods/tulshimala-rice.webp"
-  },
-  {
-    "id": 29,
-    "nameBn": "সিলেটের কদুর মুখি",
-    "nameEn": "Sylheti Kodur Mukhi",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "সিলেট",
-    "emoji": "🥣",
-    "image": "/foods/sylheti-kodur-mukhi.webp"
-  },
-  {
-    "id": 30,
-    "nameBn": "নান-কাবাব",
-    "nameEn": "Naan Kebab",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍢",
-    "image": "/foods/naan-kebab.webp"
-  },
-  {
-    "id": 31,
-    "nameBn": "পরোটা",
-    "nameEn": "Paratha",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🫓",
-    "image": "/foods/paratha.webp"
-  },
-  {
-    "id": 32,
-    "nameBn": "ডিম ভুনা",
-    "nameEn": "Egg Vuna",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍳",
-    "image": "/foods/egg-vuna.webp"
-  },
-  {
-    "id": 33,
-    "nameBn": "ডাল",
-    "nameEn": "Dal",
-    "category": "ভাত ও প্রধান খাবার",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍲",
-    "image": "/foods/dal.webp"
-  },
-  {
-    "id": 34,
-    "nameBn": "আলু ভর্তা",
-    "nameEn": "Alu Vorta",
-    "category": "ভর্তা ও ডাল",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥔",
-    "image": "/foods/alu-vorta.webp"
-  },
-  {
-    "id": 35,
-    "nameBn": "বেগুন ভর্তা",
-    "nameEn": "Begun Vorta",
-    "category": "ভর্তা ও ডাল",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍆",
-    "image": "/foods/begun-vorta.webp"
-  },
-  {
-    "id": 36,
-    "nameBn": "সরিষা ভর্তা",
-    "nameEn": "Shorisha Vorta",
-    "category": "ভর্তা ও ডাল",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥣",
-    "image": "/foods/shorisha-vorta.webp"
-  },
-  {
-    "id": 37,
-    "nameBn": "শুঁটকি ভর্তা",
-    "nameEn": "Shutki Vorta",
-    "category": "ভর্তা ও ডাল",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🌶️",
-    "image": "/foods/shutki-vorta.webp"
-  },
-  {
-    "id": 38,
+    "id": 14,
     "nameBn": "বাখরখানি",
     "nameEn": "Bakarkhani",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
+    "category": "আঞ্চলিক বিশেষত্ব",
     "region": "পুরান ঢাকা",
     "emoji": "🍪",
     "image": "/foods/bakarkhani.webp"
   },
   {
-    "id": 39,
+    "id": 15,
     "nameBn": "ফুচকা",
     "nameEn": "Fuchka",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
+    "category": "আঞ্চলিক বিশেষত্ব",
     "region": "সারা বাংলাদেশ",
     "emoji": "🥙",
     "image": "/foods/fuchka.webp"
   },
   {
-    "id": 40,
-    "nameBn": "চটপটি",
-    "nameEn": "Chotpoti",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥣",
-    "image": "/foods/chotpoti.webp"
-  },
-  {
-    "id": 41,
-    "nameBn": "ঝালমুড়ি",
-    "nameEn": "Jhalmuri",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍿",
-    "image": "/foods/jhalmuri.webp"
-  },
-  {
-    "id": 42,
-    "nameBn": "সিঙ্গারা",
-    "nameEn": "Singara",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥟",
-    "image": "/foods/singara.webp"
-  },
-  {
-    "id": 43,
-    "nameBn": "সমুচা",
-    "nameEn": "Somucha",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🌮",
-    "image": "/foods/somucha.webp"
-  },
-  {
-    "id": 44,
-    "nameBn": "বেগুনি",
-    "nameEn": "Beguni",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍆",
-    "image": "/foods/beguni.webp"
-  },
-  {
-    "id": 45,
-    "nameBn": "পেঁয়াজু",
-    "nameEn": "Peyaju",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🧆",
-    "image": "/foods/peyaju.webp"
-  },
-  {
-    "id": 46,
-    "nameBn": "মোগলাই পরোটা",
-    "nameEn": "Mughlai Paratha",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍳",
-    "image": "/foods/mughlai-paratha.webp"
-  },
-  {
-    "id": 47,
-    "nameBn": "হালিম",
-    "nameEn": "Halim",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
+    "id": 16,
+    "nameBn": "শাহী হালিম",
+    "nameEn": "Shahi Halim",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "পুরান ঢাকা",
     "emoji": "🍲",
-    "image": "/foods/halim.webp"
+    "image": "/foods/shahi-halim.webp"
   },
   {
-    "id": 48,
-    "nameBn": "চা-বিস্কুট",
-    "nameEn": "Tea and Biscuit",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
+    "id": 17,
+    "nameBn": "বেলা বিস্কুট",
+    "nameEn": "Bela Biscuit",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "চট্টগ্রাম",
+    "emoji": "🍪",
+    "image": "/foods/bela-biscuit.webp"
+  },
+  {
+    "id": 18,
+    "nameBn": "দিনাজপুরের কাটারিভোগ",
+    "nameEn": "Kataribhog Rice",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "দিনাজপুর",
+    "emoji": "🍚",
+    "image": "/foods/kataribhog-rice.webp"
+  },
+  {
+    "id": 19,
+    "nameBn": "শেরপুরের তুলসীমালা",
+    "nameEn": "Tulshimala Rice",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "শেরপুর",
+    "emoji": "🍚",
+    "image": "/foods/tulshimala-rice.webp"
+  },
+  {
+    "id": 20,
+    "nameBn": "বোরহানি",
+    "nameEn": "Borhani",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "পুরান ঢাকা",
+    "emoji": "🥛",
+    "image": "/foods/borhani.webp"
+  },
+  {
+    "id": 21,
+    "nameBn": "সাত রঙা চা",
+    "nameEn": "Seven Color Tea",
+    "category": "আঞ্চলিক বিশেষত্ব",
+    "region": "শ্রীমঙ্গল",
     "emoji": "☕",
-    "image": "/foods/tea-and-biscuit.webp"
+    "image": "/foods/seven-color-tea.webp"
   },
   {
-    "id": 49,
-    "nameBn": "দই-চিড়া",
-    "nameEn": "Doi Chira",
-    "category": "স্ট্রিট ফুড ও স্ন্যাকস",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥣",
-    "image": "/foods/doi-chira.webp"
+    "id": 22,
+    "nameBn": "বিবিখানা পিঠা",
+    "nameEn": "Bibi Khana Pitha",
+    "category": "পিঠা",
+    "region": "শরীয়তপুর",
+    "emoji": "🥮",
+    "image": "/foods/bibi-khana-pitha.webp"
   },
   {
-    "id": 50,
+    "id": 23,
+    "nameBn": "খোলাজা পিঠা",
+    "nameEn": "Kholaja Pitha",
+    "category": "পিঠা",
+    "region": "নোয়াখালী",
+    "emoji": "🥞",
+    "image": "/foods/kholaja-pitha.webp"
+  },
+  {
+    "id": 24,
+    "nameBn": "চুঙ্গাপুড়া পিঠা",
+    "nameEn": "Chunga Pura Pitha",
+    "category": "পিঠা",
+    "region": "সিলেট",
+    "emoji": "🎋",
+    "image": "/foods/chunga-pura-pitha.webp"
+  },
+  {
+    "id": 25,
+    "nameBn": "নকশি পিঠা",
+    "nameEn": "Nokshi Pitha",
+    "category": "পিঠা",
+    "region": "ময়মনসিংহ",
+    "emoji": "🍪",
+    "image": "/foods/nokshi-pitha.webp"
+  },
+  {
+    "id": 26,
     "nameBn": "ভাপা পিঠা",
     "nameEn": "Vapa Pitha",
     "category": "পিঠা",
@@ -450,16 +234,7 @@
     "image": "/foods/vapa-pitha.webp"
   },
   {
-    "id": 51,
-    "nameBn": "পাটিসাপটা",
-    "nameEn": "Patishapta",
-    "category": "পিঠা",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🌯",
-    "image": "/foods/patishapta.webp"
-  },
-  {
-    "id": 52,
+    "id": 27,
     "nameBn": "চিতই পিঠা",
     "nameEn": "Chitoi Pitha",
     "category": "পিঠা",
@@ -468,79 +243,16 @@
     "image": "/foods/chitoi-pitha.webp"
   },
   {
-    "id": 53,
-    "nameBn": "দুধ চিতই",
-    "nameEn": "Dudh Chitoi",
+    "id": 28,
+    "nameBn": "পাটিসাপটা",
+    "nameEn": "Patishapta",
     "category": "পিঠা",
     "region": "সারা বাংলাদেশ",
-    "emoji": "🥛",
-    "image": "/foods/dudh-chitoi.webp"
+    "emoji": "🌯",
+    "image": "/foods/patishapta.webp"
   },
   {
-    "id": 54,
-    "nameBn": "পুলি পিঠা",
-    "nameEn": "Puli Pitha",
-    "category": "পিঠা",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥟",
-    "image": "/foods/puli-pitha.webp"
-  },
-  {
-    "id": 55,
-    "nameBn": "তেলের পিঠা (পাকান)",
-    "nameEn": "Teler Pitha",
-    "category": "পিঠা",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥠",
-    "image": "/foods/teler-pitha.webp"
-  },
-  {
-    "id": 56,
-    "nameBn": "নকশি পিঠা",
-    "nameEn": "Nokshi Pitha",
-    "category": "পিঠা",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍪",
-    "image": "/foods/nokshi-pitha.webp"
-  },
-  {
-    "id": 57,
-    "nameBn": "মালপোয়া",
-    "nameEn": "Malpoya",
-    "category": "পিঠা",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥞",
-    "image": "/foods/malpoya.webp"
-  },
-  {
-    "id": 58,
-    "nameBn": "শরীয়তপুরের বিবিখানা পিঠা",
-    "nameEn": "Bibi Khana Pitha",
-    "category": "পিঠা",
-    "region": "শরীয়তপুর",
-    "emoji": "🥮",
-    "image": "/foods/bibi-khana-pitha.webp"
-  },
-  {
-    "id": 59,
-    "nameBn": "নোয়াখালীর খোলাজা পিঠা",
-    "nameEn": "Kholaja Pitha",
-    "category": "পিঠা",
-    "region": "নোয়াখালী",
-    "emoji": "🥞",
-    "image": "/foods/kholaja-pitha.webp"
-  },
-  {
-    "id": 60,
-    "nameBn": "শাহী জিলাপি",
-    "nameEn": "Shahi Jilapi",
-    "category": "মিষ্টি",
-    "region": "পুরান ঢাকা",
-    "emoji": "🥨",
-    "image": "/foods/shahi-jilapi.webp"
-  },
-  {
-    "id": 61,
+    "id": 29,
     "nameBn": "কুমিল্লার রসমালাই",
     "nameEn": "Cumilla Rasmalai",
     "category": "মিষ্টি",
@@ -549,7 +261,7 @@
     "image": "/foods/cumilla-rasmalai.webp"
   },
   {
-    "id": 62,
+    "id": 30,
     "nameBn": "বগুড়ার দই",
     "nameEn": "Bogura Doi",
     "category": "মিষ্টি",
@@ -558,7 +270,7 @@
     "image": "/foods/bogura-doi.webp"
   },
   {
-    "id": 63,
+    "id": 31,
     "nameBn": "নাটোরের কাঁচাগোল্লা",
     "nameEn": "Natore Kachagolla",
     "category": "মিষ্টি",
@@ -567,7 +279,7 @@
     "image": "/foods/natore-kachagolla.webp"
   },
   {
-    "id": 64,
+    "id": 32,
     "nameBn": "পোড়াবাড়ির চমচম",
     "nameEn": "Porabari Chomchom",
     "category": "মিষ্টি",
@@ -576,7 +288,7 @@
     "image": "/foods/porabari-chomchom.webp"
   },
   {
-    "id": 65,
+    "id": 33,
     "nameBn": "মুক্তাগাছার মণ্ডা",
     "nameEn": "Muktagacha Monda",
     "category": "মিষ্টি",
@@ -585,16 +297,16 @@
     "image": "/foods/muktagacha-monda.webp"
   },
   {
-    "id": 66,
+    "id": 34,
     "nameBn": "তিলের খাজা",
     "nameEn": "Tiler Khaja",
     "category": "মিষ্টি",
-    "region": "কুষ্টিয়া",
+    "region": "কুষ্টিয়া",
     "emoji": "🥖",
     "image": "/foods/tiler-khaja.webp"
   },
   {
-    "id": 67,
+    "id": 35,
     "nameBn": "বালিশ মিষ্টি",
     "nameEn": "Balish Mishti",
     "category": "মিষ্টি",
@@ -603,7 +315,7 @@
     "image": "/foods/balish-mishti.webp"
   },
   {
-    "id": 68,
+    "id": 36,
     "nameBn": "ব্রাহ্মণবাড়িয়ার ছানামুখী",
     "nameEn": "Brahmanbaria Chanamukhi",
     "category": "মিষ্টি",
@@ -612,7 +324,7 @@
     "image": "/foods/brahmanbaria-chanamukhi.webp"
   },
   {
-    "id": 69,
+    "id": 37,
     "nameBn": "শেরপুরের ছানার পায়েস",
     "nameEn": "Sherpur Chanar Payesh",
     "category": "মিষ্টি",
@@ -621,7 +333,7 @@
     "image": "/foods/sherpur-chanar-payesh.webp"
   },
   {
-    "id": 70,
+    "id": 38,
     "nameBn": "অষ্টগ্রামের পনির",
     "nameEn": "Ashtagram Cheese",
     "category": "মিষ্টি",
@@ -630,7 +342,7 @@
     "image": "/foods/ashtagram-cheese.webp"
   },
   {
-    "id": 71,
+    "id": 39,
     "nameBn": "মুন্সিগঞ্জের পাতক্ষীর",
     "nameEn": "Munshiganj Patkhir",
     "category": "মিষ্টি",
@@ -639,16 +351,16 @@
     "image": "/foods/munshiganj-patkhir.webp"
   },
   {
-    "id": 72,
-    "nameBn": "ভোলার মহিষের দুধের দই",
-    "nameEn": "Bhola Buffalo Yogurt",
+    "id": 40,
+    "nameBn": "মহিষের দুধের দই",
+    "nameEn": "Buffalo Yogurt",
     "category": "মিষ্টি",
     "region": "ভোলা",
     "emoji": "🥣",
-    "image": "/foods/bhola-buffalo-yogurt.webp"
+    "image": "/foods/buffalo-yogurt.webp"
   },
   {
-    "id": 73,
+    "id": 41,
     "nameBn": "গোপালগঞ্জের রসগোল্লা",
     "nameEn": "Gopalganj Rasgulla",
     "category": "মিষ্টি",
@@ -657,43 +369,25 @@
     "image": "/foods/gopalganj-rasgulla.webp"
   },
   {
-    "id": 74,
-    "nameBn": "মির্জাপুরের জামুর্কির সন্দেশ",
-    "nameEn": "Mirzapur Jamurki Sandesh",
+    "id": 42,
+    "nameBn": "জামুর্কির সন্দেশ",
+    "nameEn": "Jamurki Sandesh",
     "category": "মিষ্টি",
     "region": "টাঙ্গাইল",
     "emoji": "🍬",
-    "image": "/foods/mirzapur-jamurki-sandesh.webp"
+    "image": "/foods/jamurki-sandesh.webp"
   },
   {
-    "id": 75,
-    "nameBn": "মেহেরপুরের সাবিত্রী মিষ্টি",
-    "nameEn": "Meherpur Sabitri Mishti",
+    "id": 43,
+    "nameBn": "সাবিত্রী মিষ্টি",
+    "nameEn": "Sabitri Mishti",
     "category": "মিষ্টি",
     "region": "মেহেরপুর",
     "emoji": "🍯",
-    "image": "/foods/meherpur-sabitri-mishti.webp"
+    "image": "/foods/sabitri-mishti.webp"
   },
   {
-    "id": 76,
-    "nameBn": "মানিকগঞ্জের হাজারী গুড়",
-    "nameEn": "Manikganj Hazari Gur",
-    "category": "মিষ্টি",
-    "region": "মানিকগঞ্জ",
-    "emoji": "🏺",
-    "image": "/foods/manikganj-hazari-gur.webp"
-  },
-  {
-    "id": 77,
-    "nameBn": "যশোরের খেজুরের গুড়",
-    "nameEn": "Jashore Khejur Gur",
-    "category": "মিষ্টি",
-    "region": "যশোর",
-    "emoji": "🍯",
-    "image": "/foods/jashore-khejur-gur.webp"
-  },
-  {
-    "id": 78,
+    "id": 44,
     "nameBn": "পাবনার প্যারা মিষ্টি",
     "nameEn": "Pabna Pera Mishti",
     "category": "মিষ্টি",
@@ -702,35 +396,35 @@
     "image": "/foods/pabna-pera-mishti.webp"
   },
   {
-    "id": 79,
-    "nameBn": "ফিরনি",
-    "nameEn": "Firni",
+    "id": 45,
+    "nameBn": "শাহী জিলাপি",
+    "nameEn": "Shahi Jilapi",
     "category": "মিষ্টি",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥣",
-    "image": "/foods/firni.webp"
+    "region": "পুরান ঢাকা",
+    "emoji": "🥨",
+    "image": "/foods/shahi-jilapi.webp"
   },
   {
-    "id": 80,
-    "nameBn": "পায়েস",
-    "nameEn": "Payesh",
+    "id": 46,
+    "nameBn": "যশোরের খেজুরের গুড়",
+    "nameEn": "Jashore Khejur Gur",
     "category": "মিষ্টি",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍚",
-    "image": "/foods/payesh.webp"
+    "region": "যশোর",
+    "emoji": "🍯",
+    "image": "/foods/jashore-khejur-gur.webp"
   },
   {
-    "id": 81,
-    "nameBn": "রাজশাহীর ফজলি আম",
-    "nameEn": "Rajshahi Fazli Mango",
-    "category": "ফল ও কৃষি",
-    "region": "রাজশাহী",
-    "emoji": "🥭",
-    "image": "/foods/rajshahi-fazli-mango.webp"
+    "id": 47,
+    "nameBn": "সিরাজগঞ্জের পানতোয়া",
+    "nameEn": "Sirajganj Pantua",
+    "category": "মিষ্টি",
+    "region": "সিরাজগঞ্জ",
+    "emoji": "🍯",
+    "image": "/foods/sirajganj-pantua.webp"
   },
   {
-    "id": 82,
-    "nameBn": "চাঁপাইনবাবগঞ্জের খিরসাপাত আম",
+    "id": 48,
+    "nameBn": "খিরসাপাত আম",
     "nameEn": "Khirsapat Mango",
     "category": "ফল ও কৃষি",
     "region": "চাঁপাইনবাবগঞ্জ",
@@ -738,25 +432,7 @@
     "image": "/foods/khirsapat-mango.webp"
   },
   {
-    "id": 83,
-    "nameBn": "চাঁপাইনবাবগঞ্জের ল্যাংড়া আম",
-    "nameEn": "Langra Mango",
-    "category": "ফল ও কৃষি",
-    "region": "চাঁপাইনবাবগঞ্জ",
-    "emoji": "🥭",
-    "image": "/foods/langra-mango.webp"
-  },
-  {
-    "id": 84,
-    "nameBn": "চাঁপাইনবাবগঞ্জের আমসত্ত্ব",
-    "nameEn": "Amsotto",
-    "category": "ফল ও কৃষি",
-    "region": "চাঁপাইনবাবগঞ্জ",
-    "emoji": "🥮",
-    "image": "/foods/amsotto.webp"
-  },
-  {
-    "id": 85,
+    "id": 49,
     "nameBn": "হাঁড়িভাঙ্গা আম",
     "nameEn": "Haribhanga Mango",
     "category": "ফল ও কৃষি",
@@ -765,16 +441,7 @@
     "image": "/foods/haribhanga-mango.webp"
   },
   {
-    "id": 86,
-    "nameBn": "নওগাঁর নাকফজলি আম",
-    "nameEn": "Nakfazli Mango",
-    "category": "ফল ও কৃষি",
-    "region": "নওগাঁ",
-    "emoji": "🥭",
-    "image": "/foods/nakfazli-mango.webp"
-  },
-  {
-    "id": 87,
+    "id": 50,
     "nameBn": "সুন্দরবনের মধু",
     "nameEn": "Sundarbans Honey",
     "category": "ফল ও কৃষি",
@@ -783,7 +450,7 @@
     "image": "/foods/sundarbans-honey.webp"
   },
   {
-    "id": 88,
+    "id": 51,
     "nameBn": "নরসিংদীর লটকন",
     "nameEn": "Narsingdi Lotkon",
     "category": "ফল ও কৃষি",
@@ -792,16 +459,7 @@
     "image": "/foods/narsingdi-lotkon.webp"
   },
   {
-    "id": 89,
-    "nameBn": "নরসিংদীর অমৃতসাগর কলা",
-    "nameEn": "Amritasagar Banana",
-    "category": "ফল ও কৃষি",
-    "region": "নরসিংদী",
-    "emoji": "🍌",
-    "image": "/foods/amritasagar-banana.webp"
-  },
-  {
-    "id": 90,
+    "id": 52,
     "nameBn": "মধুপুরের আনারস",
     "nameEn": "Madhupur Pineapple",
     "category": "ফল ও কৃষি",
@@ -810,25 +468,7 @@
     "image": "/foods/madhupur-pineapple.webp"
   },
   {
-    "id": 91,
-    "nameBn": "মাগুরার হাজরাপুরী লিচু",
-    "nameEn": "Magura Hazrapuri Litchi",
-    "category": "ফল ও কৃষি",
-    "region": "মাগুরা",
-    "emoji": "🍒",
-    "image": "/foods/magura-hazrapuri-litchi.webp"
-  },
-  {
-    "id": 92,
-    "nameBn": "গাজীপুরের কাঁঠাল",
-    "nameEn": "Gazipur Jackfruit",
-    "category": "ফল ও কৃষি",
-    "region": "গাজীপুর",
-    "emoji": "🍈",
-    "image": "/foods/gazipur-jackfruit.webp"
-  },
-  {
-    "id": 93,
+    "id": 53,
     "nameBn": "বরিশালের আমড়া",
     "nameEn": "Barishal Amra",
     "category": "ফল ও কৃষি",
@@ -837,7 +477,7 @@
     "image": "/foods/barishal-amra.webp"
   },
   {
-    "id": 94,
+    "id": 54,
     "nameBn": "দিনাজপুরের বেদানা লিচু",
     "nameEn": "Dinajpur Bedana Litchi",
     "category": "ফল ও কৃষি",
@@ -846,57 +486,12 @@
     "image": "/foods/dinajpur-bedana-litchi.webp"
   },
   {
-    "id": 95,
-    "nameBn": "সাত রঙা চা",
-    "nameEn": "Seven Color Tea",
-    "category": "পানীয়",
-    "region": "সিলেট (শ্রীমঙ্গল)",
-    "emoji": "☕",
-    "image": "/foods/seven-color-tea.webp"
-  },
-  {
-    "id": 96,
-    "nameBn": "বোরহানি",
-    "nameEn": "Borhani",
-    "category": "পানীয়",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥛",
-    "image": "/foods/borhani.webp"
-  },
-  {
-    "id": 97,
-    "nameBn": "লাচ্ছি",
-    "nameEn": "Lassi",
-    "category": "পানীয়",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥤",
-    "image": "/foods/lassi.webp"
-  },
-  {
-    "id": 98,
-    "nameBn": "আখের রস",
-    "nameEn": "Sugarcane Juice",
-    "category": "পানীয়",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🎋",
-    "image": "/foods/sugarcane-juice.webp"
-  },
-  {
-    "id": 99,
-    "nameBn": "ডাবের পানি",
-    "nameEn": "Coconut Water",
-    "category": "পানীয়",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🥥",
-    "image": "/foods/coconut-water.webp"
-  },
-  {
-    "id": 100,
-    "nameBn": "বেলের শরবত",
-    "nameEn": "Bel-er Shorbot",
-    "category": "পানীয়",
-    "region": "সারা বাংলাদেশ",
-    "emoji": "🍹",
-    "image": "/foods/bel-er-shorbot.webp"
+    "id": 55,
+    "nameBn": "রাজশাহীর ফজলি আম",
+    "nameEn": "Rajshahi Fazli Mango",
+    "category": "ফল ও কৃষি",
+    "region": "রাজশাহী",
+    "emoji": "🥭",
+    "image": "/foods/rajshahi-fazli-mango.webp"
   }
 ]
