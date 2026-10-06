@@ -193,7 +193,7 @@ function App() {
   const pct = TOTAL ? Math.round((selected.size / TOTAL) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-brand-cream font-bangla text-brand-dark">
+    <div className="min-h-screen bg-brand-cream font-bangla text-brand-dark pb-24 lg:pb-0">
       {/* Navbar */}
       <nav className="bg-white border-b border-[#f0e8d2] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
@@ -402,10 +402,26 @@ function App() {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="bg-brand-green text-white text-center py-8 opacity-90 pb-24 lg:pb-8">
-        <p className="font-medium">© {new Date().getFullYear()} Food Bingo BD. বাংলাদেশের সব সেরা খাবার এক ঠিকানায়।</p>
+      {/* Footer / Credits Section */}
+      <footer id="credits" className="bg-white py-12 px-4 border-t border-[#f0e8d2] text-center">
+        <div className="max-w-4xl mx-auto flex flex-col items-center justify-center">
+          <p className="text-xl text-gray-700 font-medium mb-2">
+            Made by{' '}
+            <a 
+              href="https://www.facebook.com/share/1Ex7MSCMYK/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-brand-green font-bold hover:text-brand-red transition-colors underline decoration-brand-green/30 hover:decoration-brand-red decoration-2 underline-offset-4"
+            >
+              MD. Nazmus Shakib
+            </a>
+          </p>
+          <p className="text-sm text-gray-500">
+            © {new Date().getFullYear()} Food Bingo BD. বাংলাদেশের সব সেরা খাবার এক ঠিকানায়।
+          </p>
+        </div>
       </footer>
+
 
       {/* Sticky Mobile Bottom Bar */}
       {selected.size > 0 && (
