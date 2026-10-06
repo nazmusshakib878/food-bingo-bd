@@ -1,321 +1,322 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
-import foodsData from './data/foods.json';
-import { Search, RefreshCcw, Check, ChevronDown } from 'lucide-react';
-
-const PosterGenerator = lazy(() => import('./PosterGenerator'));
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import DistrictList from './components/DistrictList';
+import BDMap from './components/BDMap';
+import Poster, { POSTER_W, POSTER_H } from './components/Poster';
+import { TOTAL } from './data/districts';
+import { Download, Share2, Image as ImageIcon } from 'lucide-react';
 
 function App() {
-  const [selectedFoods, setSelectedFoods] = useState([]);
-  const [activeCategory, setActiveCategory] = useState('সব');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selected, setSelected] = useState(() => {
+    try {
+      const saved = localStorage.getItem('foodbingobd_districts');
+      if (saved) return new Set(JSON.parse(saved));
+    } catch (e) {}
+    return new Set();
+  });
+  const [activeId, setActiveId] = useState(null);
   
-  const bingoSectionRef = useRef(null);
+  const [name, setName] = useState('');
+  const [photo, setPhoto] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const posterRef = useRef(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('foodBingoSelected');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          const validIds = new Set(foodsData.map(f => f.id));
-          const safeData = parsed.filter(id => validIds.has(id));
-          setSelectedFoods(safeData);
-        }
-      } catch (e) {
-        localStorage.removeItem('foodBingoSelected');
-      }
-    }
+    localStorage.setItem('foodbingobd_districts', JSON.stringify([...selected]));
+  }, [selected]);
+
+  const handleToggle = useCallback((id) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('foodBingoSelected', JSON.stringify(selectedFoods));
-    if (selectedFoods.length === foodsData.length && foodsData.length > 0) {
-      triggerConfetti();
-    }
-  }, [selectedFoods]);
+  const handleSetMany = useCallback((ids, on) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (on) ids.forEach((id) => next.add(id));
+      else ids.forEach((id) => next.delete(id));
+      return next;
+    });
+  }, []);
 
-  const triggerConfetti = async () => {
-    const duration = 3 * 1000;
-    const end = Date.now() + duration;
-    
-    try {
-      const confettiModule = await import('canvas-confetti');
-      const confetti = confettiModule.default;
+  const handleClear = useCallback(() => {
+    setSelected(new Set());
+  }, []);
 
-      const frame = () => {
-        confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: ['#0b3d2c', '#df2a38', '#d4af37']
-      });
-      confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: ['#0b3d2c', '#df2a38', '#d4af37']
-      });
+  const handleHover = useCallback((id) => {
+    setActiveId(id);
+  }, []);
 
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('দয়া করে একটি বৈধ ছবি নির্বাচন করুন।');
+        return;
       }
-    };
-    frame();
-    } catch (e) {
-      console.error('Confetti error', e);
+      if (file.size > 5 * 1024 * 1024) {
+        alert('৫ মেগাবাইটের থেকে ছোট সাইজের ছবি আপলোড করুন।');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => setPhoto(e.target.result);
+      reader.readAsDataURL(file);
     }
   };
 
-  const categories = ['সব', ...new Set(foodsData.map(f => f.category))];
+  const downloadFile = async (type) => {
+    if (!posterRef.current || selected.size === 0) return;
+    setIsGenerating(true);
+    try {
+      await document.fonts.ready;
+      const html2canvasModule = await import('html2canvas');
+      const html2canvas = html2canvasModule.default;
 
-  const handleToggle = (id) => {
-    setSelectedFoods(prev => 
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-    );
+      // Ensure off-screen elements are visible before capture if necessary, though Poster is rendered fixedly
+      const canvas = await html2canvas(posterRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null
+      });
+
+      if (type === 'pdf') {
+        const { jsPDF } = await import('jspdf');
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'px',
+          format: [POSTER_W, POSTER_H]
+        });
+        pdf.addImage(imgData, 'PNG', 0, 0, POSTER_W, POSTER_H);
+        pdf.save('food-bingo-bd.pdf');
+      } else {
+        const mimeType = type === 'jpg' ? 'image/jpeg' : 'image/png';
+        canvas.toBlob((blob) => {
+          if (!blob) return;
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = `food-bingo-bd.${type}`;
+          link.href = url;
+          link.target = '_blank';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }, mimeType, 1.0);
+      }
+    } catch (error) {
+      console.error('Error generating poster:', error);
+      alert('পোস্টার তৈরি করতে সমস্যা হয়েছে।');
+    }
+    setIsGenerating(false);
   };
 
-  const getBadge = (score) => {
-    const percentage = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
-    if (percentage <= 30) return 'নতুন শিকারী 🌱';
-    if (percentage <= 60) return 'খাবার প্রেমিক 😋';
-    if (percentage <= 85) return 'ভোজন রসিক 🤤';
-    if (percentage <= 99) return 'ভোজন বিলাসী বস 👑';
-    return 'Food Bingo Champion 🏆';
-  };
-
-  const getScoreMessage = (score) => {
-    const percentage = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
-    if (percentage <= 30) return 'বাংলাদেশের খাবারের জগৎ এখনো অনেক বাকি! 🍽️';
-    if (percentage <= 60) return 'ভালোই খাওয়া হয়েছে! কিন্তু আরও অনেক স্বাদ অপেক্ষা করছে 😋';
-    if (percentage <= 85) return 'আপনি সত্যিকারের ভোজন রসিক! 🔥';
-    if (percentage <= 99) return 'আপনাকে থামানো কঠিন! 👑';
-    return 'অবিশ্বাস্য! আপনি Food Bingo BD সম্পূর্ণ করেছেন! 🏆🇧🇩';
-  };
-
-  const handleReset = () => {
-    if(window.confirm('আপনি কি সব বাছাই মুছে ফেলতে চান?')) {
-      setSelectedFoods([]);
+  const handleShare = async () => {
+    const shareText = `আমি Food Bingo BD-এর ${TOTAL}টি জেলার বিখ্যাত খাবারের মধ্যে ${selected.size}টি খেয়েছি! 🔥\nতুমি কি আমার স্কোর হারাতে পারবে?\n\nhttps://foodbingobd.com`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Food Bingo BD',
+          text: shareText,
+        });
+      } catch (err) {
+        console.error('Share failed', err);
+      }
+    } else {
+      navigator.clipboard.writeText(shareText);
+      alert('টেক্সট কপি করা হয়েছে! বন্ধুদের মেসেজ করে পাঠিয়ে দিন।');
     }
   };
 
-  const scrollToBingo = () => {
-    bingoSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const filteredFoods = foodsData.filter(food => {
-    const matchesCategory = activeCategory === 'সব' || food.category === activeCategory;
-    const matchesSearch = food.nameBn.includes(searchQuery) || food.nameEn.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  const score = selectedFoods.length;
-  const progressPercent = foodsData.length > 0 ? (score / foodsData.length) * 100 : 0;
+  const pct = TOTAL ? Math.round((selected.size / TOTAL) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-transparent font-bangla text-brand-dark pb-20">
-      
-      {/* 1. HERO SECTION */}
-      <section className="relative pt-10 pb-8 px-6 max-w-5xl mx-auto flex flex-col items-center text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-green/10 text-brand-green text-sm font-bold mb-6">
-          <span>🇧🇩</span> {foodsData.length}টি বিখ্যাত বাংলাদেশি খাবার
+    <div className="min-h-screen bg-brand-cream font-bangla text-brand-dark">
+      {/* Navbar */}
+      <nav className="bg-white border-b border-[#f0e8d2] sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+          <div className="font-bold text-2xl tracking-tight text-brand-green">Food Bingo BD</div>
+          <div className="font-bold bg-brand-green/10 text-brand-green px-4 py-1.5 rounded-full">
+            {selected.size} / {TOTAL}
+          </div>
         </div>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-brand-green mb-4 leading-[1.1]">
-          বাংলাদেশের কয়টা<br />খাবার খেয়েছেন?
+      </nav>
+
+      {/* Hero Section */}
+      <header className="py-12 md:py-20 px-4 text-center max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-green mb-6 leading-tight">
+          আপনার খাওয়া <span className="text-brand-red">জেলার খাবার</span> চিহ্নিত করুন
         </h1>
-        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-          আপনি যেসব খাবার খেয়েছেন সেগুলো বেছে নিন, নিজের Food Bingo তৈরি করুন এবং বন্ধুদের সাথে শেয়ার করুন।
+        <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          বাংলাদেশের ৬৪ জেলার বিখ্যাত সব খাবার। আপনি কোন কোন জেলার সিগনেচার খাবারগুলো খেয়েছেন? ম্যাপে ক্লিক করে আপনার স্কোর তৈরি করুন!
         </p>
-        <button 
-          onClick={scrollToBingo}
-          className="bg-brand-red text-white text-base md:text-lg font-bold px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-red-700 hover:scale-105 transition-all shadow-lg shadow-brand-red/20 flex items-center gap-2"
-        >
-          খাবার বাছাই শুরু করুন <ChevronDown size={20} />
-        </button>
-      </section>
+      </header>
 
-      {/* 2. 3-STEP EXPLANATION */}
-      <section className="max-w-5xl mx-auto px-6 mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-200">
-          <div className="pt-6 md:pt-0">
-            <div className="text-3xl font-bold text-gray-200 mb-2 font-sans">01</div>
-            <h3 className="text-xl font-semibold text-brand-green">খাবার বাছাই করুন</h3>
+      {/* Main Interactive Section */}
+      <main className="max-w-[1400px] mx-auto px-4 md:px-6 mb-24">
+        <div className="flex flex-col-reverse lg:flex-row gap-6 lg:gap-10">
+          
+          {/* Left: District List */}
+          <div className="w-full lg:w-[400px] xl:w-[450px] shrink-0">
+            <DistrictList
+              selected={selected}
+              activeId={activeId}
+              onToggle={handleToggle}
+              onHover={handleHover}
+              onClear={handleClear}
+              onSetMany={handleSetMany}
+            />
           </div>
-          <div className="pt-6 md:pt-0">
-            <div className="text-3xl font-bold text-gray-200 mb-2 font-sans">02</div>
-            <h3 className="text-xl font-semibold text-brand-green">নিজের পোস্টার সাজান</h3>
-          </div>
-          <div className="pt-6 md:pt-0">
-            <div className="text-3xl font-bold text-gray-200 mb-2 font-sans">03</div>
-            <h3 className="text-xl font-semibold text-brand-green">ডাউনলোড ও শেয়ার করুন</h3>
-          </div>
-        </div>
-      </section>
 
-      {/* 3. MAIN FOOD BINGO SECTION */}
-      <section ref={bingoSectionRef} className="max-w-6xl mx-auto px-4 md:px-6 mb-16">
-        
-        {/* Sticky Score & Progress */}
-        <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm mb-6 -mx-4 md:-mx-6 px-4 md:px-6 py-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-row items-center justify-between gap-4">
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-brand-dark leading-none">যেসব খাবার খেয়েছি</h2>
-                <div className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 rounded-md bg-brand-green/10 text-brand-green text-sm font-bold">
-                  {getBadge(score)}
-                </div>
-              </div>
-              <div className="text-right flex-shrink-0">
-                <div className="text-4xl md:text-5xl font-black tracking-tight">
-                  <span className="text-brand-green">{score}</span>
-                  <span className="text-xl md:text-2xl font-bold text-brand-red ml-1">/ {foodsData.length}</span>
-                </div>
-              </div>
-            </div>
-            <div className="w-full h-2.5 bg-gray-100 rounded-full mt-4 overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-red transition-all duration-500 ease-out rounded-full relative overflow-hidden" 
-                style={{ width: `${progressPercent}%` }}
-              >
-                <div className="absolute inset-0 bg-white/20 w-full h-full animate-shimmer"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Controls: Search, Categories, Reset */}
-        <div className="max-w-6xl mx-auto mb-8 flex flex-col gap-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="relative w-full md:w-96 flex-shrink-0">
-              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                className="block w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green transition-all outline-none text-base font-medium placeholder:text-gray-400"
-                placeholder="খাবারের নাম খুঁজুন..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+          {/* Right: Bangladesh Map */}
+          <div className="flex-1 bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
+            <div className="w-full max-w-[700px] aspect-[4/5] relative flex items-center justify-center">
+              <BDMap
+                selected={selected}
+                activeId={activeId}
+                interactive={true}
+                onToggle={handleToggle}
+                onHover={handleHover}
               />
             </div>
             
-            <button 
-              onClick={handleReset}
-              className="hidden md:flex text-gray-500 hover:text-brand-red font-medium items-center gap-2 transition-colors px-4 py-2 rounded-lg hover:bg-red-50 border border-transparent hover:border-red-100"
-            >
-              <RefreshCcw size={16} /> সব মুছুন
-            </button>
-          </div>
-
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar snap-x relative w-full pr-4 md:pr-0">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`snap-start whitespace-nowrap px-4 py-2 rounded-lg text-sm font-semibold transition-all flex-shrink-0 ${
-                  activeCategory === cat 
-                    ? 'bg-brand-green text-white shadow-md shadow-brand-green/20' 
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-brand-green/30 hover:bg-brand-green/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <button 
-            onClick={handleReset}
-            className="md:hidden self-start text-gray-500 hover:text-brand-red font-bold flex items-center gap-1.5 transition-colors px-3 py-1.5 rounded-lg border border-gray-200 text-sm bg-white"
-          >
-            <RefreshCcw size={14} /> সব মুছুন
-          </button>
-        </div>
-
-        {/* 6. FOOD CARD GRID */}
-        {/* 6. FOOD CARD GRID */}
-        <div className="max-w-6xl mx-auto grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-3 md:gap-4">
-          {filteredFoods.map(food => {
-            const isSelected = selectedFoods.includes(food.id);
-            return (
-              <button 
-                key={food.id}
-                onClick={() => handleToggle(food.id)}
-                aria-pressed={isSelected}
-                aria-label={food.nameBn}
-                className={`food-card relative rounded-2xl p-2.5 border flex flex-col items-center justify-between text-center aspect-[4/5] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2
-                  ${isSelected ? 'food-card-selected' : 'food-card-unselected'}`}
-              >
-                <div className="relative w-full aspect-square mb-1.5 overflow-hidden rounded-xl bg-gray-50 flex items-center justify-center">
-                  <img 
-                    src={food.image}
-                    alt={food.nameBn}
-                    loading="lazy"
-                    onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }}
-                    className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]
-                      ${isSelected ? 'grayscale-0 opacity-100 blur-0' : 'grayscale opacity-[0.55] blur-[0.5px]'}`}
-                  />
-                  <div 
-                    style={{ display: 'none' }}
-                    className={`text-4xl md:text-5xl transition-all duration-300 ${isSelected ? 'scale-110 drop-shadow-md' : 'grayscale opacity-[0.55]'}`}
-                  >
-                    {food.emoji}
-                  </div>
-                  {!isSelected && (
-                    <div className="absolute inset-0 bg-brand-cream/30 mix-blend-overlay pointer-events-none transition-opacity duration-300 group-hover:opacity-0"></div>
-                  )}
-                </div>
-                
-                <div className="mt-auto w-full flex flex-col items-center pb-0.5">
-                  <span className={`text-[13px] md:text-[15px] font-semibold leading-[1.2] text-center w-[95%] line-clamp-2 ${isSelected ? 'text-brand-green font-bold' : 'text-gray-600'}`}>
-                    {food.nameBn}
-                  </span>
-                  {food.region && (
-                    <span className="text-[10px] text-gray-400 font-sans mt-0.5 truncate w-full px-1">
-                      {food.region}
-                    </span>
-                  )}
-                </div>
-
-                {isSelected && (
-                  <div className="absolute top-2 right-2 bg-brand-green text-white rounded-full p-1 shadow-md shadow-brand-green/30">
-                    <Check size={14} strokeWidth={4} />
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* 9. SCORE EXPERIENCE & 10. CELEBRATION */}
-      <section className="max-w-3xl mx-auto px-6 mb-24">
-        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-soft border border-gray-100 text-center relative overflow-hidden">
-          <h3 className="text-xl text-gray-500 font-semibold mb-2">আপনার Food Bingo Score</h3>
-          <div className="text-6xl md:text-7xl font-bold text-brand-green mb-4">
-            {score} <span className="text-3xl text-gray-400">/ {foodsData.length}</span>
-          </div>
-          <div className="text-2xl font-bold text-brand-red mb-4">{getBadge(score)}</div>
-          <p className="text-lg text-gray-600">{getScoreMessage(score)}</p>
-          
-          {score === foodsData.length && foodsData.length > 0 && (
-            <div className="absolute inset-0 bg-brand-gold/10 flex items-center justify-center pointer-events-none">
-              <span className="text-9xl opacity-20">🏆</span>
+            {/* Mobile Score Hint */}
+            <div className="mt-8 text-center lg:hidden">
+              <div className="inline-flex items-center gap-2 bg-brand-green/10 px-5 py-2.5 rounded-full text-brand-green font-bold text-lg">
+                <span className="text-2xl">{selected.size}</span>
+                <span className="opacity-50">/</span>
+                <span>{TOTAL}</span>
+                <span className="ml-1 opacity-75 font-normal">সম্পন্ন</span>
+              </div>
             </div>
-          )}
+          </div>
+          
         </div>
-      </section>
+      </main>
 
-      {/* 11 & 12. POSTER CUSTOMIZATION & PREVIEW */}
-      <Suspense fallback={<div className="text-center py-20 text-gray-500 font-medium">পোস্টার প্রস্তুত হচ্ছে…</div>}>
-        <PosterGenerator selectedFoods={selectedFoods} getBadge={getBadge} />
-      </Suspense>
+      {/* Poster Generation Section */}
+      {selected.size > 0 && (
+        <section className="bg-white border-t border-[#f0e8d2] py-20 px-4 overflow-hidden">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-brand-green mb-4">আপনার ম্যাপ শেয়ার করুন</h2>
+              <p className="text-lg text-gray-600">আপনার নাম ও ছবি দিয়ে পোস্টার তৈরি করে বন্ধুদের চ্যালেঞ্জ করুন!</p>
+            </div>
 
-      {/* 19. FOOTER */}
-      <footer className="text-center py-12 border-t border-gray-200 mt-20">
-        <h4 className="text-xl font-bold text-brand-green mb-2">Food Bingo BD</h4>
-        <p className="text-gray-500 mb-4">বাংলাদেশের খাবারের প্রতি ভালোবাসা দিয়ে তৈরি ❤️</p>
-        <p className="text-sm text-gray-400">আপনার বাছাই ও ছবি শুধু আপনার ব্রাউজারেই থাকে।</p>
+            <div className="flex flex-col lg:flex-row gap-12 items-start justify-center">
+              
+              {/* Settings Panel */}
+              <div className="w-full lg:w-1/3 bg-[#fdfaf2] p-8 rounded-3xl shadow-sm border border-[#eadfc4]">
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">আপনার নাম</label>
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="যেমন: সাকিব"
+                    className="w-full px-4 py-3 border border-[#eadfc4] rounded-xl focus:ring-2 focus:ring-brand-green outline-none bg-white transition-colors text-lg"
+                    maxLength={20}
+                  />
+                </div>
+
+                <div className="mb-8">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">আপনার ছবি (ঐচ্ছিক)</label>
+                  <label className="flex items-center justify-center w-full h-24 px-4 transition bg-white border-2 border-[#eadfc4] border-dashed rounded-xl cursor-pointer hover:border-brand-green/50 hover:bg-brand-green/5">
+                    <span className="flex items-center space-x-2 text-gray-500">
+                      <ImageIcon className="w-5 h-5" />
+                      <span className="font-medium">ছবি আপলোড করুন</span>
+                    </span>
+                    <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
+                  </label>
+                  {photo && (
+                    <div className="mt-3 flex justify-between items-center bg-white px-4 py-2 rounded-lg border border-[#eadfc4]">
+                      <span className="text-sm text-brand-green font-medium">ছবি যুক্ত করা হয়েছে</span>
+                      <button onClick={() => setPhoto(null)} className="text-brand-red text-sm font-medium hover:underline">মুছুন</button>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-[#eadfc4]">
+                  <button 
+                    onClick={() => downloadFile('png')}
+                    disabled={isGenerating}
+                    className="w-full bg-brand-green text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-900 disabled:opacity-50 transition-colors shadow-sm"
+                  >
+                    <Download size={20} /> {isGenerating ? 'অপেক্ষা করুন...' : 'পোস্টার ডাউনলোড'}
+                  </button>
+                  <button 
+                    onClick={handleShare}
+                    className="w-full bg-brand-red text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-red-700 transition-colors shadow-sm"
+                  >
+                    <Share2 size={20} /> বন্ধুদের চ্যালেঞ্জ করুন
+                  </button>
+                </div>
+              </div>
+
+              {/* Poster Preview */}
+              <div className="w-full lg:w-[450px] xl:w-[500px] flex items-center justify-center">
+                {/* Scaled Preview wrapper to fit screen nicely */}
+                <div 
+                  className="bg-white shadow-2xl rounded-xl overflow-hidden" 
+                  style={{
+                    width: '100%', 
+                    aspectRatio: `${POSTER_W} / ${POSTER_H}`,
+                    position: 'relative',
+                    containerType: 'inline-size'
+                  }}
+                >
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: POSTER_W,
+                    height: POSTER_H,
+                    transform: `scale(var(--scale-factor))`,
+                    transformOrigin: 'top left'
+                  }} className="preview-scale-wrapper">
+                    {/* 
+                      We render a second instance for preview. 
+                      Because we want high-res download, we keep one explicitly off-screen or scale it natively.
+                      Wait, scaling down Poster visually works perfectly:
+                    */}
+                    <Poster
+                      selected={selected}
+                      name={name}
+                      photo={photo}
+                      interactive={false}
+                    />
+                  </div>
+                  <style>{`
+                    .preview-scale-wrapper {
+                      --scale-factor: min(1, calc(100cqw / ${POSTER_W}));
+                    }
+                  `}</style>
+                </div>
+              </div>
+
+              {/* Off-screen Poster for html2canvas to ensure 1080x1350 resolution */}
+              <div style={{ position: 'fixed', top: '-20000px', left: '-20000px' }}>
+                <Poster
+                  ref={posterRef}
+                  selected={selected}
+                  name={name}
+                  photo={photo}
+                  interactive={false}
+                />
+              </div>
+
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Footer */}
+      <footer className="bg-brand-green text-white text-center py-8 opacity-90">
+        <p className="font-medium">© {new Date().getFullYear()} Food Bingo BD. বাংলাদেশের সব সেরা খাবার এক ঠিকানায়।</p>
       </footer>
     </div>
   );
