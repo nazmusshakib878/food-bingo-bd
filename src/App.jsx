@@ -240,20 +240,38 @@ function App() {
                 onClick={() => handleToggle(food.id)}
                 aria-pressed={isSelected}
                 aria-label={food.nameBn}
-                className={`food-card relative rounded-2xl p-3 border flex flex-col items-center justify-between text-center aspect-[4/5] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2
+                className={`food-card relative rounded-2xl p-2.5 border flex flex-col items-center justify-between text-center aspect-[4/5] overflow-hidden group focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2
                   ${isSelected ? 'food-card-selected' : 'food-card-unselected'}`}
               >
-                <div className={`text-4xl md:text-5xl transition-all duration-300 mt-2 ${isSelected ? 'scale-110 drop-shadow-md' : 'grayscale opacity-[0.55] group-hover:opacity-75'}`}>
-                  {food.emoji}
+                <div className="relative w-full aspect-square mb-1.5 overflow-hidden rounded-xl bg-gray-50 flex items-center justify-center">
+                  <img 
+                    src={food.image}
+                    alt={food.nameBn}
+                    loading="lazy"
+                    onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }}
+                    className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]
+                      ${isSelected ? 'grayscale-0 opacity-100 blur-0' : 'grayscale opacity-[0.55] blur-[0.5px]'}`}
+                  />
+                  <div 
+                    style={{ display: 'none' }}
+                    className={`text-4xl md:text-5xl transition-all duration-300 ${isSelected ? 'scale-110 drop-shadow-md' : 'grayscale opacity-[0.55]'}`}
+                  >
+                    {food.emoji}
+                  </div>
+                  {!isSelected && (
+                    <div className="absolute inset-0 bg-brand-cream/30 mix-blend-overlay pointer-events-none transition-opacity duration-300 group-hover:opacity-0"></div>
+                  )}
                 </div>
                 
-                <div className="mt-auto w-full flex flex-col items-center pb-1">
+                <div className="mt-auto w-full flex flex-col items-center pb-0.5">
                   <span className={`text-[13px] md:text-[15px] font-semibold leading-[1.2] text-center w-[95%] line-clamp-2 ${isSelected ? 'text-brand-green font-bold' : 'text-gray-600'}`}>
                     {food.nameBn}
                   </span>
-                  <span className="text-[10px] text-gray-400 font-sans hidden md:block mt-0.5 truncate w-full px-1">
-                    {food.nameEn}
-                  </span>
+                  {food.region && (
+                    <span className="text-[10px] text-gray-400 font-sans mt-0.5 truncate w-full px-1">
+                      {food.region}
+                    </span>
+                  )}
                 </div>
 
                 {isSelected && (

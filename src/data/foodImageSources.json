@@ -1,0 +1,702 @@
+[
+  {
+    "foodId": 1,
+    "food": "কাচ্চি বিরিয়ানি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 2,
+    "food": "মোরগ পোলাও",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 3,
+    "food": "ঢাকাই বিরিয়ানি (হাজির)",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 4,
+    "food": "আখনি পোলাও",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 5,
+    "food": "ভুনা খিচুড়ি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 6,
+    "food": "মেজবানি গরুর মাংস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 7,
+    "food": "কালা ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 8,
+    "food": "চাটগাঁইয়া গরুর রেজালা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 9,
+    "food": "সাতকড়া গরুর মাংস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 10,
+    "food": "চুই ঝাল গরুর মাংস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 11,
+    "food": "চুইঝালের খাসি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 12,
+    "food": "গরুর ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 13,
+    "food": "খাসির রেজালা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 14,
+    "food": "মুরগির রোস্ট",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 15,
+    "food": "হাঁসের মাংস ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 16,
+    "food": "ইলিশ ভাপা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 17,
+    "food": "সর্ষে ইলিশ",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 18,
+    "food": "ইলিশ ভাজা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 19,
+    "food": "ইলিশ পাতুরি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 20,
+    "food": "লইট্টা ফ্রাই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 21,
+    "food": "লইট্টা শুঁটকি ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 22,
+    "food": "কোরাল মাছের ঝোল",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 23,
+    "food": "বাগদা চিংড়ির মালাইকারি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 24,
+    "food": "গলদা চিংড়ি ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 25,
+    "food": "সুন্দরবনের কাঁকড়া ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 26,
+    "food": "রূপচাঁদা ফ্রাই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 27,
+    "food": "দিনাজপুরের কাটারিভোগ চালের ভাত",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 28,
+    "food": "শেরপুরের তুলসীমালা চালের ভাত",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 29,
+    "food": "সিলেটের কদুর মুখি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 30,
+    "food": "নান-কাবাব",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 31,
+    "food": "পরোটা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 32,
+    "food": "ডিম ভুনা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 33,
+    "food": "ডাল",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 34,
+    "food": "আলু ভর্তা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 35,
+    "food": "বেগুন ভর্তা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 36,
+    "food": "সরিষা ভর্তা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 37,
+    "food": "শুঁটকি ভর্তা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 38,
+    "food": "বাখরখানি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 39,
+    "food": "ফুচকা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 40,
+    "food": "চটপটি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 41,
+    "food": "ঝালমুড়ি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 42,
+    "food": "সিঙ্গারা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 43,
+    "food": "সমুচা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 44,
+    "food": "বেগুনি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 45,
+    "food": "পেঁয়াজু",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 46,
+    "food": "মোগলাই পরোটা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 47,
+    "food": "হালিম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 48,
+    "food": "চা-বিস্কুট",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 49,
+    "food": "দই-চিড়া",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 50,
+    "food": "ভাপা পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 51,
+    "food": "পাটিসাপটা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 52,
+    "food": "চিতই পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 53,
+    "food": "দুধ চিতই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 54,
+    "food": "পুলি পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 55,
+    "food": "তেলের পিঠা (পাকান)",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 56,
+    "food": "নকশি পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 57,
+    "food": "মালপোয়া",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 58,
+    "food": "শরীয়তপুরের বিবিখানা পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 59,
+    "food": "নোয়াখালীর খোলাজা পিঠা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 60,
+    "food": "শাহী জিলাপি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 61,
+    "food": "কুমিল্লার রসমালাই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 62,
+    "food": "বগুড়ার দই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 63,
+    "food": "নাটোরের কাঁচাগোল্লা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 64,
+    "food": "পোড়াবাড়ির চমচম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 65,
+    "food": "মুক্তাগাছার মণ্ডা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 66,
+    "food": "তিলের খাজা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 67,
+    "food": "বালিশ মিষ্টি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 68,
+    "food": "ব্রাহ্মণবাড়িয়ার ছানামুখী",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 69,
+    "food": "শেরপুরের ছানার পায়েস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 70,
+    "food": "অষ্টগ্রামের পনির",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 71,
+    "food": "মুন্সিগঞ্জের পাতক্ষীর",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 72,
+    "food": "ভোলার মহিষের দুধের দই",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 73,
+    "food": "গোপালগঞ্জের রসগোল্লা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 74,
+    "food": "মির্জাপুরের জামুর্কির সন্দেশ",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 75,
+    "food": "মেহেরপুরের সাবিত্রী মিষ্টি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 76,
+    "food": "মানিকগঞ্জের হাজারী গুড়",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 77,
+    "food": "যশোরের খেজুরের গুড়",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 78,
+    "food": "পাবনার প্যারা মিষ্টি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 79,
+    "food": "ফিরনি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 80,
+    "food": "পায়েস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 81,
+    "food": "রাজশাহীর ফজলি আম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 82,
+    "food": "চাঁপাইনবাবগঞ্জের খিরসাপাত আম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 83,
+    "food": "চাঁপাইনবাবগঞ্জের ল্যাংড়া আম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 84,
+    "food": "চাঁপাইনবাবগঞ্জের আমসত্ত্ব",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 85,
+    "food": "হাঁড়িভাঙ্গা আম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 86,
+    "food": "নওগাঁর নাকফজলি আম",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 87,
+    "food": "সুন্দরবনের মধু",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 88,
+    "food": "নরসিংদীর লটকন",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 89,
+    "food": "নরসিংদীর অমৃতসাগর কলা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 90,
+    "food": "মধুপুরের আনারস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 91,
+    "food": "মাগুরার হাজরাপুরী লিচু",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 92,
+    "food": "গাজীপুরের কাঁঠাল",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 93,
+    "food": "বরিশালের আমড়া",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 94,
+    "food": "দিনাজপুরের বেদানা লিচু",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 95,
+    "food": "সাত রঙা চা",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 96,
+    "food": "বোরহানি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 97,
+    "food": "লাচ্ছি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 98,
+    "food": "আখের রস",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 99,
+    "food": "ডাবের পানি",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  },
+  {
+    "foodId": 100,
+    "food": "বেলের শরবত",
+    "source": "Web Search (Fallback to Emoji for now)",
+    "sourceUrl": "N/A",
+    "license": "N/A"
+  }
+]
