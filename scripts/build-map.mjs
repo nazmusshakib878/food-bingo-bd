@@ -104,34 +104,42 @@ function simplifyRing(ring, tol) {
   const res = a.slice(0, -1).concat(b);
   return res.length >= 4 ? res : ring;
 }
+const width = 700, height = 900;
+const allPts = feats.flatMap(f => rings(f.geom).flatMap(poly => poly.flatMap(r => r)));
+const projection = geoMercator().fitExtent([[10, 10], [width - 10, height - 10]], { type: 'MultiPoint', coordinates: allPts });
+
 const dissolved = districtIds.map((id) => {
   const polys = feats
     .filter((f) => f.id === id)
     .flatMap((f) => rings(f.geom))
-    .map((p) => p.map((r) => r.map(([x, y]) => [round(x), round(y)])));
+    .map((p) => p.map((r) => r.map(([lon, lat]) => {
+      const pt = projection([lon, lat]);
+      return [round(pt[0]), round(pt[1])];
+    })));
+  
   const multi = polygonClipping.union(polys[0], ...polys.slice(1)).map((poly) =>
-    poly.map((r) => simplifyRing(r, 0.004))
+    poly.map((r) => simplifyRing(r, 0.5)) // 0.5 pixel tolerance
   );
-  return {
-    id,
-    type: 'Feature',
-    geometry: { type: 'MultiPolygon', coordinates: multi },
-  };
+  
+  // Calculate centroid
+  let cx = 0, cy = 0, pts = 0;
+  for(const poly of multi) {
+    for(const pt of poly[0]) {
+      cx += pt[0]; cy += pt[1]; pts++;
+    }
+  }
+  
+  // Create SVG path string manually to avoid d3-geo pathing issues
+  const d = multi.map(poly => {
+    return poly.map(ring => {
+      return 'M' + ring.map(pt => `${pt[0]},${pt[1]}`).join('L') + 'Z';
+    }).join('');
+  }).join('');
+  
+  return { id, d, cx: Math.round(cx/pts), cy: Math.round(cy/pts) };
 });
 
-const fc = { type: 'FeatureCollection', features: dissolved };
-const width = 700, height = 900;
-const projection = geoMercator().fitExtent([[10, 10], [width - 10, height - 10]], fc);
-const path = geoPath(projection).digits(1);
-
-const out = {
-  width,
-  height,
-  districts: dissolved.map((f) => {
-    const [cx, cy] = path.centroid(f);
-    return { id: f.id, d: path(f), cx: Math.round(cx), cy: Math.round(cy) };
-  }),
-};
+const out = { width, height, districts: dissolved };
 fs.mkdirSync('src/data', { recursive: true });
 fs.writeFileSync('src/data/bdMap.json', JSON.stringify(out));
 console.log('written bdMap.json', (JSON.stringify(out).length / 1024).toFixed(0), 'KB');

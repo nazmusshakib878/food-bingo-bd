@@ -3,7 +3,30 @@ import DistrictList from './components/DistrictList';
 import BDMap from './components/BDMap';
 import Poster, { POSTER_W, POSTER_H } from './components/Poster';
 import { TOTAL } from './data/districts';
-import { Download, Share2, Image as ImageIcon } from 'lucide-react';
+import { Download, Share2, Image as ImageIcon, Link2 } from 'lucide-react';
+
+const enToBn = (num) => String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+
+const encodeChallenge = (name, score) => {
+  try {
+    const json = JSON.stringify({ n: name.substring(0, 30), s: score });
+    return btoa(unescape(encodeURIComponent(json))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  } catch (e) { return ''; }
+};
+
+const decodeChallenge = (c) => {
+  try {
+    let base64 = c.replace(/-/g, '+').replace(/_/g, '/');
+    const pad = base64.length % 4;
+    if (pad) base64 += '='.repeat(4 - pad);
+    const json = decodeURIComponent(escape(atob(base64)));
+    const data = JSON.parse(json);
+    if (typeof data.n === 'string' && typeof data.s === 'number' && data.s >= 0 && data.s <= 100) {
+      return { name: data.n.substring(0, 30), score: data.s };
+    }
+  } catch (e) {}
+  return null;
+};
 
 function App() {
   const [selected, setSelected] = useState(() => {
@@ -18,11 +41,35 @@ function App() {
   const [name, setName] = useState('');
   const [photo, setPhoto] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [challengeData, setChallengeData] = useState(null);
   const posterRef = useRef(null);
+  const previewContainerRef = useRef(null);
+  const [previewScale, setPreviewScale] = useState(1);
+
+  useEffect(() => {
+    if (!previewContainerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const width = entry.contentRect.width;
+        setPreviewScale(width / POSTER_W);
+      }
+    });
+    observer.observe(previewContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('foodbingobd_districts', JSON.stringify([...selected]));
   }, [selected]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const c = params.get('c');
+    if (c) {
+      const data = decodeChallenge(c);
+      if (data) setChallengeData(data);
+    }
+  }, []);
 
   const handleToggle = useCallback((id) => {
     setSelected((prev) => {
@@ -67,46 +114,40 @@ function App() {
     }
   };
 
-  const downloadFile = async (type) => {
+  const exportCanvasBlob = async () => {
+    if (!posterRef.current || selected.size === 0) return null;
+    await document.fonts.ready;
+    const html2canvasModule = await import('html2canvas');
+    const html2canvas = html2canvasModule.default;
+    const canvas = await html2canvas(posterRef.current, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: null,
+      onclone: (clonedDoc) => {
+        const clonedNode = clonedDoc.getElementById('poster-node');
+        if (clonedNode) {
+          clonedNode.style.transform = 'none';
+        }
+      }
+    });
+    return new Promise(resolve => canvas.toBlob(resolve, 'image/png', 1.0));
+  };
+
+  const downloadFile = async () => {
     if (!posterRef.current || selected.size === 0) return;
     setIsGenerating(true);
     try {
-      await document.fonts.ready;
-      const html2canvasModule = await import('html2canvas');
-      const html2canvas = html2canvasModule.default;
-
-      // Ensure off-screen elements are visible before capture if necessary, though Poster is rendered fixedly
-      const canvas = await html2canvas(posterRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: null
-      });
-
-      if (type === 'pdf') {
-        const { jsPDF } = await import('jspdf');
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'px',
-          format: [POSTER_W, POSTER_H]
-        });
-        pdf.addImage(imgData, 'PNG', 0, 0, POSTER_W, POSTER_H);
-        pdf.save('food-bingo-bd.pdf');
-      } else {
-        const mimeType = type === 'jpg' ? 'image/jpeg' : 'image/png';
-        canvas.toBlob((blob) => {
-          if (!blob) return;
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.download = `food-bingo-bd.${type}`;
-          link.href = url;
-          link.target = '_blank';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
-        }, mimeType, 1.0);
-      }
+      const blob = await exportCanvasBlob();
+      if (!blob) throw new Error('No blob generated');
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `food-bingo-bd.png`;
+      link.href = url;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (error) {
       console.error('Error generating poster:', error);
       alert('পোস্টার তৈরি করতে সমস্যা হয়েছে।');
@@ -114,22 +155,39 @@ function App() {
     setIsGenerating(false);
   };
 
-  const handleShare = async () => {
-    const shareText = `আমি Food Bingo BD-এর ${TOTAL}টি জেলার বিখ্যাত খাবারের মধ্যে ${selected.size}টি খেয়েছি! 🔥\nতুমি কি আমার স্কোর হারাতে পারবে?\n\nhttps://foodbingobd.com`;
+  const handleNativeShare = async () => {
+    if (!posterRef.current || selected.size === 0) return;
+    setIsGenerating(true);
+    const url = 'https://food-bingo-bd.vercel.app/';
+    const shareText = `আমি বাংলাদেশের ${enToBn(selected.size)}/১০০ খাবার খেয়েছি! তুমি কয়টা খেয়েছ? 👇 ${url}`;
     
-    if (navigator.share) {
-      try {
+    try {
+      const blob = await exportCanvasBlob();
+      if (!blob) throw new Error('No blob generated');
+      const file = new File([blob], 'food-bingo-bd.png', { type: 'image/png' });
+      
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
+          files: [file],
           title: 'Food Bingo BD',
-          text: shareText,
+          text: shareText
         });
-      } catch (err) {
-        console.error('Share failed', err);
+      } else {
+        throw new Error('Share not supported');
       }
-    } else {
+    } catch (err) {
       navigator.clipboard.writeText(shareText);
-      alert('টেক্সট কপি করা হয়েছে! বন্ধুদের মেসেজ করে পাঠিয়ে দিন।');
+      alert('লিংক কপি হয়েছে!');
     }
+    setIsGenerating(false);
+  };
+
+  const handleChallengeLink = () => {
+    const n = name.trim() || 'একজন বন্ধু';
+    const c = encodeChallenge(n, selected.size);
+    const url = `https://food-bingo-bd.vercel.app/?c=${c}`;
+    navigator.clipboard.writeText(`আমি বাংলাদেশের ${enToBn(selected.size)}/১০০ খাবার খেয়েছি! তুমি কয়টা খেয়েছ? 👇 ${url}`);
+    alert('লিংক কপি হয়েছে!');
   };
 
   const pct = TOTAL ? Math.round((selected.size / TOTAL) * 100) : 0;
@@ -147,14 +205,42 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <header className="py-12 md:py-20 px-4 text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-green mb-6 leading-tight">
+      <header className="py-8 md:py-12 px-4 text-center max-w-4xl mx-auto">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-brand-green mb-4 leading-tight [text-wrap:balance]">
           আপনার খাওয়া <span className="text-brand-red">জেলার খাবার</span> চিহ্নিত করুন
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed [text-wrap:balance]">
           বাংলাদেশের ৬৪ জেলার বিখ্যাত সব খাবার। আপনি কোন কোন জেলার সিগনেচার খাবারগুলো খেয়েছেন? ম্যাপে ক্লিক করে আপনার স্কোর তৈরি করুন!
         </p>
+        <button 
+          onClick={() => {
+            document.getElementById('district-search')?.focus();
+            window.scrollTo({ top: 500, behavior: 'smooth' });
+          }}
+          className="px-8 py-3 bg-brand-green text-white text-lg font-bold rounded-full shadow-md hover:bg-green-900 transition"
+        >
+          শুরু করুন
+        </button>
       </header>
+
+      {challengeData && (
+        <div className="max-w-4xl mx-auto px-4 mb-8">
+          <div className="bg-[#f2f9f5] border-2 border-brand-green rounded-3xl p-8 text-center shadow-sm">
+            <h2 className="text-2xl md:text-3xl font-bold text-brand-green mb-4 leading-tight">
+              {challengeData.name} খেয়েছে {enToBn(challengeData.score)}/১০০ — তুমি কয়টা খেয়েছ?
+            </h2>
+            <button 
+              onClick={() => {
+                document.getElementById('district-search')?.focus();
+                window.scrollTo({ top: 500, behavior: 'smooth' });
+              }}
+              className="mt-2 px-8 py-3 bg-brand-red text-white text-lg font-bold rounded-full shadow hover:bg-red-700 transition"
+            >
+              Start
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Main Interactive Section */}
       <main className="max-w-[1400px] mx-auto px-4 md:px-6 mb-24">
@@ -173,7 +259,7 @@ function App() {
           </div>
 
           {/* Right: Bangladesh Map */}
-          <div className="flex-1 bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
+          <div className="flex-1 lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-8rem)] bg-white rounded-[32px] border border-[#eadfc4] shadow-soft p-4 md:p-8 flex flex-col items-center overflow-hidden">
             <div className="w-full max-w-[700px] aspect-[4/5] relative flex items-center justify-center">
               <BDMap
                 selected={selected}
@@ -200,8 +286,19 @@ function App() {
 
       {/* Poster Generation Section */}
       {selected.size > 0 && (
-        <section className="bg-white border-t border-[#f0e8d2] py-20 px-4 overflow-hidden">
+        <section id="poster-section" className="bg-white border-t border-[#f0e8d2] py-20 px-4 overflow-hidden relative">
           <div className="max-w-6xl mx-auto">
+            {challengeData && (
+              <div className="mb-12 p-6 rounded-3xl bg-[#fdfaf2] border-2 border-brand-green text-center shadow-sm max-w-2xl mx-auto">
+                <h3 className="text-2xl md:text-3xl font-bold text-brand-dark mb-4">
+                  তুমি <span className="text-brand-green">{enToBn(selected.size)}</span> vs {challengeData.name} <span className="text-brand-red">{enToBn(challengeData.score)}</span>
+                </h3>
+                <p className="text-xl font-medium text-gray-700 bg-white inline-block px-6 py-2 rounded-full border border-[#eadfc4]">
+                  {selected.size > challengeData.score ? 'দারুণ! তুমি জিতে গেছো! 🏆' : selected.size < challengeData.score ? 'ইশ! আরেকটু খেলে জিতে যেতে! 🥲' : 'আরেহ! সমান সমান! 🤝'}
+                </p>
+              </div>
+            )}
+
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-brand-green mb-4">আপনার ম্যাপ শেয়ার করুন</h2>
               <p className="text-lg text-gray-600">আপনার নাম ও ছবি দিয়ে পোস্টার তৈরি করে বন্ধুদের চ্যালেঞ্জ করুন!</p>
@@ -242,47 +339,54 @@ function App() {
 
                 <div className="space-y-4 pt-4 border-t border-[#eadfc4]">
                   <button 
-                    onClick={() => downloadFile('png')}
+                    onClick={downloadFile}
                     disabled={isGenerating}
                     className="w-full bg-brand-green text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-green-900 disabled:opacity-50 transition-colors shadow-sm"
                   >
-                    <Download size={20} /> {isGenerating ? 'অপেক্ষা করুন...' : 'পোস্টার ডাউনলোড'}
+                    <Download size={20} /> {isGenerating ? 'অপেক্ষা করুন...' : 'ডাউনলোড'}
                   </button>
                   <button 
-                    onClick={handleShare}
+                    onClick={handleNativeShare}
+                    disabled={isGenerating}
+                    className="w-full bg-blue-600 text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-blue-700 disabled:opacity-50 transition-colors shadow-sm"
+                  >
+                    <Share2 size={20} /> শেয়ার করুন
+                  </button>
+                  <button 
+                    onClick={handleChallengeLink}
                     className="w-full bg-brand-red text-white py-3.5 rounded-xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-red-700 transition-colors shadow-sm"
                   >
-                    <Share2 size={20} /> বন্ধুদের চ্যালেঞ্জ করুন
+                    <Link2 size={20} /> বন্ধুকে চ্যালেঞ্জ করুন
                   </button>
                 </div>
               </div>
 
               {/* Poster Preview */}
-              <div className="w-full lg:w-[450px] xl:w-[500px] flex items-center justify-center">
-                {/* Scaled Preview wrapper to fit screen nicely */}
+              <div className="w-full md:w-[450px] xl:w-[500px] flex items-center justify-center">
                 <div 
-                  className="bg-white shadow-2xl rounded-xl overflow-hidden" 
+                  ref={previewContainerRef}
+                  className="bg-white shadow-2xl overflow-hidden" 
                   style={{
-                    width: '100%', 
-                    aspectRatio: `${POSTER_W} / ${POSTER_H}`,
                     position: 'relative',
-                    containerType: 'inline-size'
+                    width: '100%', 
+                    maxWidth: '420px',
+                    aspectRatio: '4 / 5',
+                    borderRadius: '16px'
                   }}
                 >
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: POSTER_W,
-                    height: POSTER_H,
-                    transform: `scale(var(--scale-factor))`,
-                    transformOrigin: 'top left'
-                  }} className="preview-scale-wrapper">
-                    {/* 
-                      We render a second instance for preview. 
-                      Because we want high-res download, we keep one explicitly off-screen or scale it natively.
-                      Wait, scaling down Poster visually works perfectly:
-                    */}
+                  <div 
+                    id="poster-node"
+                    ref={posterRef}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: POSTER_W,
+                      height: POSTER_H,
+                      transform: `scale(${previewScale})`,
+                      transformOrigin: 'top left'
+                    }}
+                  >
                     <Poster
                       selected={selected}
                       name={name}
@@ -290,23 +394,7 @@ function App() {
                       interactive={false}
                     />
                   </div>
-                  <style>{`
-                    .preview-scale-wrapper {
-                      --scale-factor: min(1, calc(100cqw / ${POSTER_W}));
-                    }
-                  `}</style>
                 </div>
-              </div>
-
-              {/* Off-screen Poster for html2canvas to ensure 1080x1350 resolution */}
-              <div style={{ position: 'fixed', top: '-20000px', left: '-20000px' }}>
-                <Poster
-                  ref={posterRef}
-                  selected={selected}
-                  name={name}
-                  photo={photo}
-                  interactive={false}
-                />
               </div>
 
             </div>
@@ -315,9 +403,26 @@ function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-brand-green text-white text-center py-8 opacity-90">
+      <footer className="bg-brand-green text-white text-center py-8 opacity-90 pb-24 lg:pb-8">
         <p className="font-medium">© {new Date().getFullYear()} Food Bingo BD. বাংলাদেশের সব সেরা খাবার এক ঠিকানায়।</p>
       </footer>
+
+      {/* Sticky Mobile Bottom Bar */}
+      {selected.size > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#f0e8d2] px-6 py-4 lg:hidden z-50 flex items-center justify-between shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+          <div className="font-bold text-brand-green text-lg">
+            স্কোর: {enToBn(selected.size)} / {enToBn(TOTAL)}
+          </div>
+          <button 
+            onClick={() => {
+              document.getElementById('poster-section')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="bg-brand-red text-white px-6 py-2.5 rounded-full font-bold shadow-sm"
+          >
+            পোস্টার বানান
+          </button>
+        </div>
+      )}
     </div>
   );
 }

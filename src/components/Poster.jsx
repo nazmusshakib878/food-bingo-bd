@@ -78,13 +78,8 @@ const Poster = forwardRef(function Poster(
           )}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          {name?.trim() ? (
-            <div style={{ fontSize: 38, fontWeight: 600, color: GOLD, marginBottom: 6, lineHeight: 1.3 }}>
-              {name.trim()}
-            </div>
-          ) : null}
-          <div style={{ fontSize: 58, fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>
-            আমার বাংলাদেশের খাবারের ম্যাপ
+          <div style={{ fontSize: 58, fontWeight: 700, color: '#fff', lineHeight: 1.2, wordBreak: 'break-word' }}>
+            {name?.trim() ? `${name.trim()} এর খাবারের মানচিত্র` : 'আমার খাবারের মানচিত্র'}
           </div>
           <div style={{ fontSize: 28, color: '#cfe3d9', marginTop: 10 }}>বাংলাদেশের বিখ্যাত খাবারের ভ্রমণ</div>
         </div>
@@ -104,9 +99,10 @@ const Poster = forwardRef(function Poster(
             flexShrink: 0,
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <BDMap
               selected={selected}
               interactive={interactive}
@@ -130,8 +126,8 @@ const Poster = forwardRef(function Poster(
           >
             <div style={{ fontSize: 24, color: '#cfe3d9', marginBottom: 4 }}>আমার স্কোর</div>
             <div style={{ lineHeight: 1.05 }}>
-              <span style={{ fontSize: 112, fontWeight: 700, color: GOLD }}>{count}</span>
-              <span style={{ fontSize: 44, fontWeight: 600, opacity: 0.8 }}> / {TOTAL}</span>
+              <span style={{ fontSize: 96, fontWeight: 700, color: GOLD }}>{count}</span>
+              <span style={{ fontSize: 36, fontWeight: 600, opacity: 0.8 }}>/{TOTAL} জেলা</span>
             </div>
             <div style={{ marginTop: 14, height: 14, borderRadius: 999, background: 'rgba(255,255,255,0.18)' }}>
               <div

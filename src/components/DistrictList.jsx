@@ -109,7 +109,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                           onMouseEnter={() => onHover(d.id)}
                           onMouseLeave={() => onHover(null)}
                           aria-pressed={on}
-                          className="w-full flex items-center gap-3 text-left rounded-xl border px-2.5 py-2 transition active:scale-[0.98]"
+                          className="w-full flex items-center gap-3 text-left rounded-xl border px-2.5 py-2 transition active:scale-[0.98] min-h-[4.5rem]"
                           style={{
                             borderColor: on ? div.color : activeId === d.id ? '#0b3d2c' : '#ece4cf',
                             background: on ? `${div.color}14` : '#fff',
@@ -128,7 +128,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                             <span className="block font-bold text-[15px] leading-tight text-brand-dark">
                               {d.districtBn}
                             </span>
-                            <span className="block text-[13px] leading-tight text-gray-500 truncate">
+                            <span className="block text-[13px] leading-tight text-gray-500 line-clamp-2 mt-0.5">
                               {d.foodBn}
                             </span>
                           </span>
@@ -137,6 +137,7 @@ export default function DistrictList({ selected, onToggle, onSetMany, onClear, o
                               src={d.image}
                               alt=""
                               loading="lazy"
+                              onError={(e) => { e.target.style.display = 'none'; }}
                               className={`w-10 h-10 rounded-lg object-cover shrink-0 transition ${
                                 on ? '' : 'grayscale opacity-60'
                               }`}
